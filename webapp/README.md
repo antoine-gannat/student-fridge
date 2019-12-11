@@ -1,4 +1,4 @@
-# frigo-uco
+# solidaryfridge
 
 ## Project setup
 ```
