@@ -21,18 +21,18 @@ const port = Number(process.env.PORT) || 4000;
 
 let fastifyOptions;
 if (!process.env.NODE_DEBUG) {
+  logger.log("loading ssl keys.")
   // Certificate
   const privateKey = fs.readFileSync('/etc/letsencrypt/live/student-fridge.fr/privkey.pem', 'utf8');
   const certificate = fs.readFileSync('/etc/letsencrypt/live/student-fridge.fr/cert.pem', 'utf8');
-  const ca = fs.readFileSync('/etc/letsencrypt/live/student-fridge.fr/chain.pem', 'utf8');
 
   fastifyOptions = {
     http2: true,
+    ignoreTrailingSlash: true,
     https: {
       allowHTTP1: true, // fallback support for HTTP1
       key: privateKey,
-      cert: certificate,
-      ca: ca
+      cert: certificate
     }
   }
 }
@@ -63,7 +63,7 @@ fastify.use(requestsLogger);
 fastify.addHook('preHandler', authMiddleware);
 
 // Start the server
-fastify.listen(port, "0.0.0.0", (err, address) => {
+fastify.listen(port, "::", (err, address) => {
   if (err) {
     logger.error(err.message);
     return;
