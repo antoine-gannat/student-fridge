@@ -20,7 +20,7 @@ WORKDIR /app/webapp
 
 COPY ./webapp/package*.json ./
 
-RUN npm i --prod
+RUN npm i
 
 COPY ./webapp/. ./
 
