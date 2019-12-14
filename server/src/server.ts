@@ -6,6 +6,7 @@ import logger from './loggers/logger';
 import service from './service';
 import database from './database';
 import authMiddleware from './controllers/auth/authMiddleware';
+import * as fs from 'fs';
 
 database.connect();
 
@@ -18,7 +19,20 @@ const options = {
 // Set the port
 const port = Number(process.env.PORT) || 4000;
 
-let fastify = Fastify();
+let fastifyOptions;
+if (!process.env.NODE_DEBUG) {
+  // Certificate
+
+  fastifyOptions = {
+    https: {
+      key: fs.readFileSync('/letsencrypt/privkey.pem', 'utf8'),
+      cert: fs.readFileSync('/letsencrypt/cert.pem', 'utf8'),
+      ca: fs.readFileSync('/letsencrypt/chain.pem', 'utf8')
+    }
+  }
+}
+
+let fastify = Fastify(fastifyOptions);
 
 // Register a static route to serve the client
 logger.log("Serving frontend from folder: ", path.join(__dirname, '../../webapp/dist'));

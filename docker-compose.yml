@@ -36,6 +36,8 @@ services:
       context: ./
       dockerfile: dockerfile
     container_name: student-fridge
+    volumes:
+      - /etc/letsencrypt/live/student-fridge.fr/:/letsencrypt
     environment:
      STUDENTFRIDGE_DB_HOST: mysql
      STUDENTFRIDGE_DB_PASSWORD: $STUDENTFRIDGE_DB_PASSWORD

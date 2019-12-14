@@ -2,6 +2,9 @@
     "watch": [
         "./src"
     ],
+    "env": {
+        "NODE_DEBUG": true
+    },
     "ext": "ts, yaml",
     "exec": "ts-node ./src/server.ts"
 }
