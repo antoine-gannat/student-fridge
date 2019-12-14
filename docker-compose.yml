@@ -3,7 +3,7 @@ services:
   # MySQL database
   mysql:
     volumes:
-      - ./data/mysql:/docker-entrypoint-initdb.d
+      - ./database/mysql:/docker-entrypoint-initdb.d
       - mysql-volume:/var/lib/mysql
     image: mysql:5.7
     container_name: mysql
@@ -37,7 +37,11 @@ services:
       dockerfile: dockerfile
     container_name: student-fridge
     environment:
-     - STUDENTFRIDGE_DB_HOST: mysql
+     STUDENTFRIDGE_DB_HOST: mysql
+     STUDENTFRIDGE_DB_PASSWORD: $STUDENTFRIDGE_DB_PASSWORD
+     STUDENTFRIDGE_DB_NAME: $STUDENTFRIDGE_DB_NAME
+     STUDENTFRIDGE_DB_USERNAME: $STUDENTFRIDGE_DB_USERNAME
+     STUDENTFRIDGE_JWT_PASSWORD: $STUDENTFRIDGE_JWT_PASSWORD
     ports:
       - 80:4000
     depends_on: 

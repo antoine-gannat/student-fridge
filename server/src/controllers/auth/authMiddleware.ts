@@ -7,6 +7,10 @@ import logger from '../../loggers/logger';
 const whiteList = ["/api/auth"]
 
 function isWhitelisted(request): boolean {
+  // if the url doesn't start with '/api', whitelist it
+  if (!request.req.url.startsWith("/api")) {
+    return (true);
+  }
   // check if the current url starts with any of the whitelisted urls
   for (let i = 0; i < whiteList.length; i++) {
     let url = whiteList[i];
