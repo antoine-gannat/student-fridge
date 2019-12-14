@@ -11,7 +11,7 @@ function getIp(req): String {
             || req.headers['x-real-ip']
             || req.connection.remoteAddress
             || req.socket.remoteAddress
-            || req.connection.socket.remoteAddress;
+            || (req.connection.socket && req.connection.socket.remoteAddress);
     }
     return (ip);
 }
