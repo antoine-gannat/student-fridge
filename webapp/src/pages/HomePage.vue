@@ -21,20 +21,17 @@
     <section class="faq container">
       <h2>Qu'est-ce que quoi ?</h2>
     </section>
-    <section class="menu container">
-      <h2 class="mr-2">Au menu</h2>
-      <AddProduct />
-    </section>
+    <Products />
   </main>
 </template>
 
 <script>
-import AddProduct from '../components/AddProduct'
+import Products from '../components/products/Products';
 /* eslint-disable no-console */
 export default {
   name: 'HomePage',
   components: {
-    AddProduct
+    Products
   },
   data: () => {
     return {
@@ -97,10 +94,6 @@ export default {
 }
 
 .faq {
-  height: 500px;
-}
-
-.menu {
   height: 500px;
 }
 </style>
