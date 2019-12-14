@@ -6,7 +6,7 @@ WORKDIR /app/server
 
 COPY ./server/package*.json ./
 
-RUN npm i --prod
+RUN npm i
 
 COPY ./server/. ./
 
