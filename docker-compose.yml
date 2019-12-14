@@ -37,7 +37,9 @@ services:
       dockerfile: dockerfile
     container_name: student-fridge
     volumes:
-      - /etc/letsencrypt/live/student-fridge.fr/:/letsencrypt
+      - /etc/letsencrypt/live/student-fridge.fr/privkey.pem:/etc/letsencrypt/live/student-fridge.fr/privkey.pem
+      - /etc/letsencrypt/live/student-fridge.fr/cert.pem:/etc/letsencrypt/live/student-fridge.fr/cert.pem
+      - /etc/letsencrypt/live/student-fridge.fr/chain.pem:/etc/letsencrypt/live/student-fridge.fr/chain.pem
     environment:
      STUDENTFRIDGE_DB_HOST: mysql
      STUDENTFRIDGE_DB_PASSWORD: $STUDENTFRIDGE_DB_PASSWORD

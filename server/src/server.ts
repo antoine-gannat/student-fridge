@@ -22,12 +22,15 @@ const port = Number(process.env.PORT) || 4000;
 let fastifyOptions;
 if (!process.env.NODE_DEBUG) {
   // Certificate
+  const privateKey = fs.readFileSync('/etc/letsencrypt/live/student-fridge.fr/privkey.pem', 'utf8');
+  const certificate = fs.readFileSync('/etc/letsencrypt/live/student-fridge.fr/cert.pem', 'utf8');
+  const ca = fs.readFileSync('/etc/letsencrypt/live/student-fridge.fr/chain.pem', 'utf8');
 
   fastifyOptions = {
     https: {
-      key: fs.readFileSync('/letsencrypt/privkey.pem', 'utf8'),
-      cert: fs.readFileSync('/letsencrypt/cert.pem', 'utf8'),
-      ca: fs.readFileSync('/letsencrypt/chain.pem', 'utf8')
+      key: privateKey,
+      cert: certificate,
+      ca: ca
     }
   }
 }
