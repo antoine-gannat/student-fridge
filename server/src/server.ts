@@ -21,10 +21,10 @@ const port = Number(process.env.PORT) || 4000;
 let fastify = Fastify();
 
 // Register a static route to serve the client
-logger.log("Serving frontend from folder: ", path.join(__dirname, '../client-dist'));
+logger.log("Serving frontend from folder: ", path.join(__dirname, '../../webapp/dist'));
 
 fastify.register(require('fastify-static'), {
-  root: path.join(__dirname, '../client-dist'),
+  root: path.join(__dirname, '../../webapp/dist'),
   decorateReply: false
 })
 

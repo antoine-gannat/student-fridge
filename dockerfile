@@ -12,6 +12,7 @@ COPY ./server/. ./
 
 RUN npm run build
 
+# Add the openapi config
 COPY ./server/src/openapi.yaml ./dist/
 
 #### WEBAPP ####
@@ -24,6 +25,7 @@ RUN npm i
 
 COPY ./webapp/. ./
 
+# build the frontend
 RUN npm run build
 
 EXPOSE 4000
