@@ -19,17 +19,21 @@ const options = {
 // Set the port
 const port = Number(process.env.PORT) || 4000;
 
+// set the default fastify options
 let fastifyOptions = {
   ignoreTrailingSlash: true,
-  http2: true,
+  http2: process.env.NODE_DEBUG ? false : true,
   https: null
 }
+
+// if production mode
 if (!process.env.NODE_DEBUG) {
   logger.log("loading ssl keys.")
   // Certificate
   const privateKey = fs.readFileSync('/etc/letsencrypt/live/student-fridge.fr/privkey.pem', 'utf8');
   const certificate = fs.readFileSync('/etc/letsencrypt/live/student-fridge.fr/cert.pem', 'utf8');
 
+  // add the https certificates
   fastifyOptions.https = {
     allowHTTP1: true,
     key: privateKey,
@@ -63,10 +67,11 @@ fastify.use(requestsLogger);
 fastify.addHook('preHandler', authMiddleware);
 
 // Start the server
-fastify.listen(port, "::", (err, address) => {
+fastify.listen(port, "0.0.0.0", (err, address) => {
   if (err) {
     logger.error(err.message);
     return;
   }
   logger.log("Server listening on address", address);
 });
+

@@ -51,7 +51,7 @@ export default {
         .then((response) => {
           this.$store.commit('setUser', response.data.user);
           this.$snotify.success(response.data.message);
-          this.$router.push(this.$route.query.redirect || '/dashboard');
+          this.$router.push(this.$route.query.redirect || '/');
         }).catch((err) => {
           this.$snotify.error(err.response.data.message, 'Error !');
         });

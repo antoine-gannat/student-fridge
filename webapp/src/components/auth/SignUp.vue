@@ -81,7 +81,7 @@ export default {
         this.$store.commit('setUser', response.data.user);
         this.$snotify.success(response.data.message, 'Success !');
         // redirect to the dashboard
-        this.$router.push('/dashboard');
+        this.$router.push('/');
       }).catch(err => {
         this.$snotify.error(err.response.data.message, 'Error !');
       })

@@ -112,7 +112,7 @@ export function signUp(req, res) {
       // on success
       else {
         // set the access token
-        setAccessToken(req, res, result.user.id).then(() => {
+        setAccessToken(req, res, result.id).then(() => {
           res.status(result.code || 200).send(result);
         }).catch((err) => {
           res.status(err.code).send(err);
