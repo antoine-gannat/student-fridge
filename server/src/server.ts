@@ -27,7 +27,9 @@ if (!process.env.NODE_DEBUG) {
   const ca = fs.readFileSync('/etc/letsencrypt/live/student-fridge.fr/chain.pem', 'utf8');
 
   fastifyOptions = {
+    http2: true,
     https: {
+      allowHTTP1: true, // fallback support for HTTP1
       key: privateKey,
       cert: certificate,
       ca: ca
