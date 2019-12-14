@@ -13,6 +13,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: $STUDENTFRIDGE_DB_PASSWORD
       MYSQL_DATABASE: $STUDENTFRIDGE_DB_NAME
+      MYSQL_USER: $STUDENTFRIDGE_DB_USERNAME
+      MYSQL_PASSWORD: $STUDENTFRIDGE_DB_PASSWORD
 
   # PHPmyadmin
   phpmyadmin:
@@ -28,7 +30,7 @@ services:
       PMA_ARBITRARY: 1
     restart: always
     ports:
-      - 8183:80
+      - 4000:80
   
   # student-fridge server and webapp
   student-fridge:
