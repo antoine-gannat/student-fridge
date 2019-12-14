@@ -1,4 +1,3 @@
-import * as Fastify from 'fastify';
 import * as openapiGlue from "fastify-openapi-glue";
 import * as path from 'path';
 import requestsLogger from './loggers/requestsLogger';
@@ -37,7 +36,7 @@ if (!process.env.NODE_DEBUG) {
   }
 }
 
-let fastify = Fastify(fastifyOptions);
+let fastify = require('fastify')(fastifyOptions);
 
 // Register a static route to serve the client
 logger.log("Serving frontend from folder: ", path.join(__dirname, '../../webapp/dist'));
