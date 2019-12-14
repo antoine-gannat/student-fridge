@@ -56,6 +56,9 @@ export default {
   position: fixed;
   width: 100%;
   background-attachment: rgba(0, 0, 0, 0);
+  -webkit-box-shadow: inset 0px 39px 71px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: inset 0px 39px 71px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: inset 0px 39px 71px 0px rgba(0, 0, 0, 0.75);
 }
 
 .title {

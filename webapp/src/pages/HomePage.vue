@@ -18,26 +18,34 @@
         >Rejoins nous !</router-link>
       </div>
     </section>
-    <section class="faq">
-      <h2 class="subtitle">Qu'estce que quoi ?</h2>
+    <section class="faq container">
+      <h2>Qu'est-ce que quoi ?</h2>
     </section>
-    <section class="menu">
-      <h2 class="subtitle">Au menu</h2>
+    <section class="menu container">
+      <h2 class="mr-2">Au menu</h2>
+      <AddProduct />
     </section>
   </main>
 </template>
 
 <script>
+import AddProduct from '../components/AddProduct'
 /* eslint-disable no-console */
 export default {
   name: 'HomePage',
+  components: {
+    AddProduct
+  },
   data: () => {
     return {
       deferredPrompt: null
     }
   },
   created () {
+    // catch the event prompting the user to install the PWA
     window.addEventListener('beforeinstallprompt', (e) => {
+      // prevent from opening
+      e.preventDefault();
       // Stash the event so it can be triggered later.
       this.deferredPrompt = e;
       // Update UI notify the user they can add to home screen
@@ -53,12 +61,11 @@ export default {
       // Wait for the user to respond to the prompt
       this.deferredPrompt.userChoice
         .then((choiceResult) => {
+          // if the user has accepted to install
+          // remove the deferred prompt
           if (choiceResult.outcome === 'accepted') {
-            console.log('User accepted the A2HS prompt');
-          } else {
-            console.log('User dismissed the A2HS prompt');
+            this.deferredPrompt = null;
           }
-          this.deferredPrompt = null;
         });
     }
   }
@@ -89,16 +96,11 @@ export default {
   text-align: right;
 }
 
-.subtitle {
-  position: absolute;
-  left: 15%;
-}
-
 .faq {
   height: 500px;
 }
 
 .menu {
-  height: auto;
+  height: 500px;
 }
 </style>
