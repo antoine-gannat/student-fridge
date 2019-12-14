@@ -1,3 +1,4 @@
+import * as Fastify from 'fastify';
 import * as openapiGlue from "fastify-openapi-glue";
 import * as path from 'path';
 import requestsLogger from './loggers/requestsLogger';
@@ -18,25 +19,25 @@ const options = {
 // Set the port
 const port = Number(process.env.PORT) || 4000;
 
-let fastifyOptions;
+let fastifyOptions = {
+  ignoreTrailingSlash: true,
+  http2: true,
+  https: null
+}
 if (!process.env.NODE_DEBUG) {
   logger.log("loading ssl keys.")
   // Certificate
   const privateKey = fs.readFileSync('/etc/letsencrypt/live/student-fridge.fr/privkey.pem', 'utf8');
   const certificate = fs.readFileSync('/etc/letsencrypt/live/student-fridge.fr/cert.pem', 'utf8');
 
-  fastifyOptions = {
-    http2: true,
-    ignoreTrailingSlash: true,
-    https: {
-      allowHTTP1: true, // fallback support for HTTP1
-      key: privateKey,
-      cert: certificate
-    }
+  fastifyOptions.https = {
+    allowHTTP1: true,
+    key: privateKey,
+    cert: certificate
   }
 }
 
-let fastify = require('fastify')(fastifyOptions);
+let fastify = Fastify(fastifyOptions);
 
 // Register a static route to serve the client
 logger.log("Serving frontend from folder: ", path.join(__dirname, '../../webapp/dist'));
