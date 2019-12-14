@@ -12,13 +12,16 @@
           @click="installPWA"
         >Installe l'application !</button>
         <router-link
-          to="/auth/"
+          to="/auth/signup"
           class="btn btn-primary"
-          v-else
+          v-else-if="!user"
         >Rejoins nous !</router-link>
       </div>
     </section>
-    <section class="faq container">
+    <section
+      class="faq container"
+      v-if="!user"
+    >
       <h2>Qu'est-ce que quoi ?</h2>
     </section>
     <Products />
@@ -26,6 +29,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import Products from '../components/products/Products';
 /* eslint-disable no-console */
 export default {
@@ -46,6 +50,11 @@ export default {
       // Stash the event so it can be triggered later.
       this.deferredPrompt = e;
       // Update UI notify the user they can add to home screen
+    })
+  },
+  computed: {
+    ...mapState({
+      user: state => state.user
     })
   },
   methods: {

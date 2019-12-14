@@ -14,7 +14,7 @@ export default new VueRouter({
             component: HomePage
         },
         {
-            path: '/auth/',
+            path: '/auth/:type',
             component: Auth
         }
     ]

@@ -1,7 +1,7 @@
 <template>
   <section class="products container">
     <h2 class="mr-2">Au menu</h2>
-    <AddProduct />
+    <AddProduct v-if="user" />
     <div>
       <Product
         v-for="product in products"
@@ -24,7 +24,8 @@ export default {
   },
   computed: {
     ...mapState({
-      products: state => state.products
+      products: state => state.products,
+      user: state => state.user
     })
   }
 }
