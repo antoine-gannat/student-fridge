@@ -28,6 +28,6 @@ COPY ./webapp/. ./
 # build the frontend
 RUN npm run build
 
-EXPOSE 4000
+EXPOSE 443
 
 CMD node /app/server/dist/server.js
