@@ -68,13 +68,11 @@ new OpenApiValidator({
     } else {
       logger.log("loading ssl keys.")
       // Certificate
-      const credentials: ServerOptions = {
+      const credentials: any = {
         key: fs.readFileSync('/etc/letsencrypt/live/student-fridge.fr/privkey.pem', 'utf8'),
-        cert: fs.readFileSync('/etc/letsencrypt/live/student-fridge.fr/cert.pem', 'utf8'),
-        ca: fs.readFileSync('/etc/letsencrypt/live/student-fridge.fr/chain.pem', 'utf8')
+        cert: fs.readFileSync('/etc/letsencrypt/live/student-fridge.fr/cert.pem', 'utf8')
       }
-      logger.info(credentials);
-      https.createServer(credentials, app).listen(port, "0.0.0.0", () => {
+      https.createServer(credentials, app).listen(port, () => {
         logger.log(`HTTPS server listening on port ${port}`);
       });
     }
@@ -84,9 +82,6 @@ if (!process.env.NODE_DEBUG) {
 
   let httpApp = express();
   const httpPort = 80;
-  httpApp.listen(httpPort, '0.0.0.0', () => {
-    logger.log('HTTP server listening on port', httpPort)
-  });
   httpApp.use(function (req, res, next) {
     logger.log("HTTP server, request received");
     if (req.secure) {
@@ -96,5 +91,9 @@ if (!process.env.NODE_DEBUG) {
       logger.log("HTTP server, redirecting to https://" + req.headers.host + req.url);
       res.redirect('https://' + req.headers.host + req.url);
     }
+  });
+
+  httpApp.listen(httpPort, '0.0.0.0', () => {
+    logger.log('HTTP server listening on port', httpPort)
   });
 }
