@@ -73,6 +73,7 @@ new OpenApiValidator({
         cert: fs.readFileSync('/etc/letsencrypt/live/student-fridge.fr/cert.pem', 'utf8'),
         ca: fs.readFileSync('/etc/letsencrypt/live/student-fridge.fr/chain.pem', 'utf8')
       }
+      logger.info(credentials);
       https.createServer(credentials, app).listen(port, "0.0.0.0", () => {
         logger.log(`HTTPS server listening on port ${port}`);
       });
@@ -87,9 +88,12 @@ if (!process.env.NODE_DEBUG) {
     logger.log('HTTP server listening on port', httpPort)
   });
   httpApp.use(function (req, res, next) {
+    logger.log("HTTP server, request received");
     if (req.secure) {
+      logger.log("HTTP server, request already https");
       next();
     } else {
+      logger.log("HTTP server, redirecting to https://" + req.headers.host + req.url);
       res.redirect('https://' + req.headers.host + req.url);
     }
   });
