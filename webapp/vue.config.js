@@ -1,7 +1,7 @@
 module.exports = {
     pwa: {
-        name: 'SolidaryFridge',
-        themeColor: '#FFFFFF',
+        name: 'StudentFridge',
+        themeColor: '#000000',
         msTileColor: '#000000',
         appleMobileWebAppCapable: 'yes',
         appleMobileWebAppStatusBarStyle: 'black',

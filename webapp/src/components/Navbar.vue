@@ -4,7 +4,7 @@
     <router-link
       class="navbar-brand"
       to="/"
-    >SOLIDARYFRIDGE
+    >STUDENTFRIDGE
     </router-link>
     <!-- Menu toggler for small screens -->
     <button

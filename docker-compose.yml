@@ -32,9 +32,7 @@ services:
   
   # student-fridge server and webapp
   student-fridge:
-    build:
-      context: ./
-      dockerfile: dockerfile
+    image: student-fridge
     container_name: student-fridge
     volumes:
       - /etc/letsencrypt/live/student-fridge.fr/privkey.pem:/etc/letsencrypt/live/student-fridge.fr/privkey.pem

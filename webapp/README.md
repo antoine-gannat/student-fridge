@@ -1,4 +1,4 @@
-# solidaryfridge
+# StudentFridge
 
 ## Project setup
 ```
