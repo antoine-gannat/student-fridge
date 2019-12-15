@@ -2,7 +2,6 @@ import * as jwt from 'jsonwebtoken';
 import Token from '../../declarations/token';
 import { getUserInfo } from './auth';
 import httpCodes from '../../declarations/httpCodes';
-import logger from '../../loggers/logger';
 
 const whiteList = ["/api/auth"]
 

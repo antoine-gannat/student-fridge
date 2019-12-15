@@ -97,10 +97,13 @@ export default {
   position: fixed;
   top: 0;
   width: 100%;
-  background-attachment: rgba(0, 0, 0, 0);
-  -webkit-box-shadow: inset 0px 39px 71px 0px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: inset 0px 39px 71px 0px rgba(0, 0, 0, 0.75);
-  box-shadow: inset 0px 39px 71px 0px rgba(0, 0, 0, 0.75);
+  background: rgba(0, 0, 0, 0.5);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.368);
+  z-index: 999;
+}
+
+.nav-link {
+  color: white !important;
 }
 
 .title {

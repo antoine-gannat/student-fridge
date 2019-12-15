@@ -28,7 +28,7 @@ services:
       PMA_ARBITRARY: 1
     restart: always
     ports:
-      - 4000:80
+      - 8183:80
   
   # student-fridge server and webapp
   student-fridge:

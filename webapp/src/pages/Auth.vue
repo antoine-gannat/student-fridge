@@ -1,7 +1,7 @@
 <template>
   <main>
     <section>
-      <div class="authentication-block">
+      <div class="authentication-block col-lg-5 col-md-6 col-sm-12 col-xs-12">
         <nav class="authentication-nav">
           <button
             @click.prevent="selectedPage = 'signin'"
@@ -64,9 +64,9 @@ export default {
 <style>
 .authentication-block {
   background: rgb(74, 30, 80);
-  width: 600px;
   min-height: 400px;
   height: 50vh;
+  padding: 0;
   margin-left: auto;
   margin-right: auto;
   margin-top: 15vh;

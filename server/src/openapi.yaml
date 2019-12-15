@@ -9,6 +9,8 @@ tags:
     description: Everything about authentication
   - name: user
     description: Everything about users
+  - name: product
+    description: Everything about products
 paths:
   /auth/signin/:
     post:
@@ -95,4 +97,16 @@ paths:
           description: Error
         '500':
           description: Internal Error
-      
+  /products/:
+    get:
+      summary: Get the products
+      operationId: getProducts
+      tags:
+        - user
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Error
+        '500':
+          description: Internal Error

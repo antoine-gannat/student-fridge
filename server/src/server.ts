@@ -1,14 +1,18 @@
 import * as Fastify from 'fastify';
 import * as openapiGlue from "fastify-openapi-glue";
 import * as path from 'path';
+import * as fs from 'fs';
+import * as fileUpload from 'fastify-file-upload';
+import * as multer from 'multer';
 import requestsLogger from './loggers/requestsLogger';
 import logger from './loggers/logger';
 import service from './service';
 import database from './database';
 import authMiddleware from './controllers/auth/authMiddleware';
-import * as fs from 'fs';
 
+// Initialize the database
 database.connect();
+
 
 // Set the swagger options
 const options = {
@@ -61,10 +65,18 @@ fastify.register(require('fastify-static'), {
 // Register swagger with openapiglue
 fastify.register(openapiGlue, options);
 
+// Register a plugin to handle file upload
+fastify.register(fileUpload);
+
+let upload = multer();
+fastify.use(upload.array())
 // Set the request logger
 fastify.use(requestsLogger);
+
 // Set the auth middleware
 fastify.addHook('preHandler', authMiddleware);
+
+fastify.post('/api/products/', service.addProduct);
 
 // Start the server
 fastify.listen(port, "0.0.0.0", (err, address) => {

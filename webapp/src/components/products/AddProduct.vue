@@ -107,7 +107,11 @@ export default {
         this.$snotify.error("Merci d'ajouter une image", "Erreur", { timeout: 3000 })
         return
       }
-      axios.post('/api/product/', { image: this.image, name: this.name, expiration: this.expiration }).then(() => {
+      let formData = new FormData();
+      formData.append('image', this.image);
+      formData.append('name', this.name);
+      formData.append('expirationDate', this.expiration)
+      axios.post('/api/products/', formData).then(() => {
         this.$snotify.success('Produit ajouter !', 'Succès !', { timeout: 2000 })
       }).catch((err) => {
         this.$snotify.error(err.response.data.message, 'Erreur !', { timeout: 5000 })

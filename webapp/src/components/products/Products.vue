@@ -1,5 +1,5 @@
 <template>
-  <section class="products container">
+  <section class="products">
     <h2 class="mr-2">Au menu</h2>
     <AddProduct v-if="user" />
     <div>
@@ -33,6 +33,8 @@ export default {
 
 <style scoped>
 .products {
+  background: rgb(253, 253, 253);
   height: 500px;
+  padding: 0 10em 0 10em;
 }
 </style>

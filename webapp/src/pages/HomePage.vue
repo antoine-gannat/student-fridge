@@ -18,12 +18,6 @@
         >Rejoins nous !</router-link>
       </div>
     </section>
-    <section
-      class="faq container"
-      v-if="!user"
-    >
-      <h2>Qu'est-ce que quoi ?</h2>
-    </section>
     <Products />
   </main>
 </template>
@@ -100,9 +94,5 @@ export default {
   top: 40%;
   right: 20px;
   text-align: right;
-}
-
-.faq {
-  height: 500px;
 }
 </style>

@@ -10,5 +10,9 @@ export default {
   UNAUTHORIZED: {
     code: 401,
     message: 'Unauthorized'
+  },
+  BAD_REQUEST: {
+    code: 400,
+    message: 'Bad Request'
   }
 }
