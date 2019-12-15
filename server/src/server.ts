@@ -72,6 +72,38 @@ fastify.listen(port, "0.0.0.0", (err, address) => {
     logger.error(err.message);
     return;
   }
-  logger.log("Server listening on address", address);
+  logger.log("HTTPS Server listening on address", address);
 });
 
+// if production mode
+if (!process.env.NODE_DEBUG) {
+
+  // Start another to redirect HTTP requests to HTTPS 
+  let fastifyHttp = Fastify();
+
+  fastifyHttp.all('/', (req, res) => {
+    const {
+      headers: { host },
+      url
+    } = req.req;
+    if (host) {
+      const redirectUrl = `https://${host.split(":")[0]}${url}`;
+      res.res.writeHead(301, {
+        Location: redirectUrl
+      });
+      res.res.end();
+    }
+    else {
+      res.status(400).send({ message: 'HTTP is not supported, please use HTTPS' });
+    }
+  })
+
+  fastifyHttp.listen(80, "0.0.0.0", (err, address) => {
+    if (err) {
+      logger.error(err.message);
+      return;
+    }
+    logger.log("HTTP Server listening on address", address);
+  })
+
+}
