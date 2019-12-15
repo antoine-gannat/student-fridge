@@ -19,7 +19,7 @@ module.exports = {
                 ws: true,
                 changeOrigin: true
             },
-            '/data': {
+            '/static-files': {
                 target: 'http://localhost:4000',
                 ws: true,
                 changeOrigin: true

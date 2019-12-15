@@ -4,7 +4,6 @@ import { getUserInfo } from './auth';
 import httpCodes from '../../declarations/httpCodes';
 // middleware to check if the user has access to restricted routes
 export default function (req, res, done) {
-  console.log("MIDDLEWARE:", req.url);
   // instantiate the token class
   let token = new Token(req, res);
 

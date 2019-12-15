@@ -30,7 +30,6 @@ function saveFile(file, uploadLocation) {
     return new Promise(function (resolve, reject) {
         fs.writeFile(uploadLocation, file.buffer, (err) => {
             if (err) {
-                console.log("upload failed", err);
                 reject("Upload failed");
                 return;
             }
@@ -47,15 +46,15 @@ export function uploadFile(file) {
         }
         // generate upload location
         const fileExtension = path.extname(file.originalname).toLowerCase();
-        // create the folder path
-        var uploadLocation = path.join(__dirname, '..', conf.productImageFolder);
-
-        if (!fs.existsSync(uploadLocation))
-            shell.mkdir('-p', uploadLocation);
+        // create product folder path
+        const staticFilePath = path.join(__dirname, '..', conf.productImageFolder + "/");
         // add the filename to the path
-        uploadLocation += "/" + new Date().getTime() + fileExtension;
-        saveFile(file, uploadLocation).then(() => {
-            resolve(uploadLocation);
+        const fileName = new Date().getTime() + fileExtension;
+        if (!fs.existsSync(staticFilePath))
+            shell.mkdir('-p', staticFilePath);
+        let fullLocation = staticFilePath + '/' + fileName;
+        saveFile(file, fullLocation).then(() => {
+            resolve(conf.productImageFolder + '/' + fileName);
         }, function (error) {
             reject(error);
         });

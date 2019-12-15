@@ -9,7 +9,6 @@ export function addProduct(req, res) {
         return;
     }
     const image = req.files[0];
-    console.log(req.body, image)
     fileManager.uploadFile(image).then((path) => {
         logger.info("File uploaded to " + path);
         // insert the product in the database
@@ -18,7 +17,13 @@ export function addProduct(req, res) {
                 res.status(200).send({ message: 'Product added !' })
             }).catch((error) => {
                 logger.error(error)
-                res.status(httpCodes.INTERNAL_ERROR.code).send({ message: httpCodes.INTERNAL_ERROR.message });
+                logger.info("Deleting the file just uploaded")
+                // on error, delete the uploaded file
+                fileManager.deleteFile(path).catch((err) => {
+                    logger.error("Failed to delete the uploaded file: ", path, err)
+                }).finally(() => {
+                    res.status(httpCodes.INTERNAL_ERROR.code).send({ message: httpCodes.INTERNAL_ERROR.message });
+                });
             });
     }).catch((err) => {
         logger.error(err);
@@ -27,7 +32,7 @@ export function addProduct(req, res) {
 }
 
 export function getProducts(req, res) {
-    database.query('SELECT * FROM `products` WHERE `expiration_date` >= NOW()').then((response) => {
+    database.query('SELECT * FROM `products` WHERE `expiration_date` >= NOW() OR `expiration_date` IS NULL').then((response) => {
         res.status(200).send(response);
     }).catch((error) => {
         logger.error(error)
