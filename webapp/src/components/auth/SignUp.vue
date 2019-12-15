@@ -72,7 +72,7 @@ export default {
         return this.$snotify.error('Passwords are not identical', 'Error !');
       }
       // call the api
-      axios.post('/api/auth/signup/', {
+      axios.post('/auth/signup/', {
         username: this.username,
         email: this.email,
         password: this.password

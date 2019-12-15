@@ -1,3 +1,4 @@
+import * as shell from 'shelljs';
 import * as path from 'path';
 import * as fs from 'fs';
 import conf from './declarations/config';
@@ -13,12 +14,11 @@ export function deleteFile(filePath) {
     });
 }
 
-import shell from 'shelljs';
 
 const FILE_FORMAT_ALLOWED = ['.jpg', '.png', '.jpeg']
 
 function securityChecks(file) {
-    const fileExtension = path.extname(file.name).toLowerCase();
+    const fileExtension = path.extname(file.originalname).toLowerCase();
     // check if the file extension is allowed
     if (!FILE_FORMAT_ALLOWED.find((extension) => extension === fileExtension)) {
         return (false);
@@ -27,17 +27,15 @@ function securityChecks(file) {
 }
 
 function saveFile(file, uploadLocation) {
-    let uploadFile = file;
-
     return new Promise(function (resolve, reject) {
-        uploadFile.mv(uploadLocation, function (err) {
+        fs.writeFile(uploadLocation, file.buffer, (err) => {
             if (err) {
                 console.log("upload failed", err);
                 reject("Upload failed");
                 return;
             }
             resolve("File saved");
-        });
+        })
     });
 }
 
@@ -48,14 +46,15 @@ export function uploadFile(file) {
             return;
         }
         // generate upload location
-        const fileExtension = path.extname(file.name).toLowerCase();
-        var uploadLocation = "/products/";
+        const fileExtension = path.extname(file.originalname).toLowerCase();
+        // create the folder path
+        var uploadLocation = path.join(__dirname, '..', conf.productImageFolder);
 
-        if (!fs.existsSync(conf.uploadFolder + uploadLocation))
-            shell.mkdir('-p', conf.uploadFolder + uploadLocation);
-        // create the upload location
+        if (!fs.existsSync(uploadLocation))
+            shell.mkdir('-p', uploadLocation);
+        // add the filename to the path
         uploadLocation += "/" + new Date().getTime() + fileExtension;
-        saveFile(file, conf.uploadFolder + uploadLocation).then(function (success) {
+        saveFile(file, uploadLocation).then(() => {
             resolve(uploadLocation);
         }, function (error) {
             reject(error);

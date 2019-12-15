@@ -79,7 +79,7 @@ export default {
   methods: {
     disconnect () {
       // tell the api to log the user out
-      axios.delete('/api/auth/signout/')
+      axios.delete('/auth/signout/')
         .then(() => {
           // delete the user from the store
           this.$store.commit('setUser', null);

@@ -47,7 +47,7 @@ export default {
   },
   methods: {
     signIn () {
-      axios.post('/api/auth/signin/', { email: this.formEmail, password: this.formPassword })
+      axios.post('/auth/signin/', { email: this.formEmail, password: this.formPassword })
         .then((response) => {
           this.$store.commit('setUser', response.data.user);
           this.$snotify.success(response.data.message);

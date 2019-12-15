@@ -6,6 +6,7 @@
       @click.prevent="showForm = true"
     >Ajouter un produit</button>
     <form
+      enctype="multipart/form-data"
       v-if="showForm"
       class="row"
     >

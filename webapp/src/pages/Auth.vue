@@ -61,7 +61,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .authentication-block {
   background: rgb(74, 30, 80);
   min-height: 400px;

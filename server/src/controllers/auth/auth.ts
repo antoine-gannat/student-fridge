@@ -40,7 +40,7 @@ export function getUserInfo(userId: number) {
 }
 
 function setAccessToken(req, res, userId) {
-  let token = new Token(req.req, res.res);
+  let token = new Token(req, res);
   let generatedToken;
   return (new Promise((resolve, reject) => {
     // try to generate a token
@@ -184,7 +184,7 @@ export function signIn(req, res) {
 
 
 export function signOut(req, res) {
-  let token = new Token(req.req, res.res);
+  let token = new Token(req, res);
   // delete the token from the cookies
   token.delete();
   res.status(200).send({ message: 'Disconnected' });

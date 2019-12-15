@@ -4,12 +4,9 @@ import * as product from './controllers/products/products';
 
 export default {
   // Auth
-  signIn: auth.signIn,
-  signUp: auth.signUp,
-  signOut: auth.signOut,
+  auth,
   // Users
-  currentSession: user.currentSession,
+  user,
   // Products
-  addProduct: product.addProduct,
-  getProducts: product.getProducts
+  product
 }

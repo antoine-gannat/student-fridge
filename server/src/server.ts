@@ -1,34 +1,19 @@
-import * as Fastify from 'fastify';
-import * as openapiGlue from "fastify-openapi-glue";
+import * as express from 'express';
 import * as path from 'path';
 import * as fs from 'fs';
-import * as fileUpload from 'fastify-file-upload';
-import * as multer from 'multer';
+import * as bodyParser from 'body-parser';
+import * as  http from 'http';
+import { OpenApiValidator } from 'express-openapi-validator';
 import requestsLogger from './loggers/requestsLogger';
 import logger from './loggers/logger';
 import service from './service';
 import database from './database';
 import authMiddleware from './controllers/auth/authMiddleware';
-
 // Initialize the database
 database.connect();
 
-
-// Set the swagger options
-const options = {
-  specification: `${__dirname}/openapi.yaml`,
-  service: service,
-  prefix: 'api'
-};
 // Set the port
 const port = Number(process.env.PORT) || 4000;
-
-// set the default fastify options
-let fastifyOptions = {
-  ignoreTrailingSlash: true,
-  http2: process.env.NODE_DEBUG ? false : true,
-  https: null
-}
 
 // if production mode
 if (!process.env.NODE_DEBUG) {
@@ -37,85 +22,83 @@ if (!process.env.NODE_DEBUG) {
   const privateKey = fs.readFileSync('/etc/letsencrypt/live/student-fridge.fr/privkey.pem', 'utf8');
   const certificate = fs.readFileSync('/etc/letsencrypt/live/student-fridge.fr/cert.pem', 'utf8');
 
-  // add the https certificates
-  fastifyOptions.https = {
-    allowHTTP1: true,
-    key: privateKey,
-    cert: certificate
-  }
 }
-
-let fastify = Fastify(fastifyOptions);
+const app = express();
 
 // Register a static route to serve the client
 logger.log("Serving frontend from folder: ", path.join(__dirname, '../../webapp/dist'));
 
-fastify.register(require('fastify-static'), {
-  root: path.join(__dirname, '../../webapp/dist'),
-  decorateReply: false
-})
+// Set static routes
+app.use('/', express.static(path.join(__dirname, '../../webapp/dist')));
+app.use('/data', express.static(path.join(__dirname, '../static-files')));
 
-// Register a static route to the static files
-fastify.register(require('fastify-static'), {
-  root: path.join(__dirname, '../static-files'),
-  prefix: '/data/',
-  decorateReply: false
-})
+// set middlewares to decode requests
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.text());
+app.use(bodyParser.json());
 
-// Register swagger with openapiglue
-fastify.register(openapiGlue, options);
+// Handle file upload
+// app.use(fileUpload());
 
-// Register a plugin to handle file upload
-fastify.register(fileUpload);
-
-let upload = multer();
-fastify.use(upload.array())
 // Set the request logger
-fastify.use(requestsLogger);
+app.use(requestsLogger);
 
 // Set the auth middleware
-fastify.addHook('preHandler', authMiddleware);
+app.use('/api', authMiddleware);
 
-fastify.post('/api/products/', service.addProduct);
+new OpenApiValidator({
+  apiSpec: path.join(__dirname, 'openapi.yaml')
+})
+  .install(app)
+  .then(() => {
+    // Route declaration //
+    // auth
+    app.post('/auth/signup/', service.auth.signUp);
+    app.post('/auth/signin/', service.auth.signIn);
+    app.delete('/auth/signout/', service.auth.signOut);
 
-// Start the server
-fastify.listen(port, "0.0.0.0", (err, address) => {
-  if (err) {
-    logger.error(err.message);
-    return;
-  }
-  logger.log("HTTPS Server listening on address", address);
-});
+    // products
+    app.get('/api/products/', service.product.getProducts);
+    app.post('/api/products/', service.product.addProduct);
 
-// if production mode
-if (!process.env.NODE_DEBUG) {
+    // user
+    app.get('/api/user/current-session', service.user.currentSession);
 
-  // Start another to redirect HTTP requests to HTTPS 
-  let fastifyHttp = Fastify();
+    // start the server
+    http.createServer(app).listen(port, "0.0.0.0", () => {
+      logger.log(`Listening on port ${port}`);
+    });
+  });
 
-  fastifyHttp.all('/', (req, res) => {
-    const {
-      headers: { host },
-      url
-    } = req.req;
-    if (host) {
-      const redirectUrl = `https://${host.split(":")[0]}${url}`;
-      res.res.writeHead(301, {
-        Location: redirectUrl
-      });
-      res.res.end();
-    }
-    else {
-      res.status(400).send({ message: 'HTTP is not supported, please use HTTPS' });
-    }
-  })
+// // if production mode
+// if (!process.env.NODE_DEBUG) {
 
-  fastifyHttp.listen(80, "0.0.0.0", (err, address) => {
-    if (err) {
-      logger.error(err.message);
-      return;
-    }
-    logger.log("HTTP Server listening on address", address);
-  })
+//   // Start another to redirect HTTP requests to HTTPS 
+//   let fastifyHttp = Fastify();
 
-}
+//   fastifyHttp.all('/', (req, res) => {
+//     const {
+//       headers: { host },
+//       url
+//     } = req.req;
+//     if (host) {
+//       const redirectUrl = `https://${host.split(":")[0]}${url}`;
+//       res.res.writeHead(301, {
+//         Location: redirectUrl
+//       });
+//       res.res.end();
+//     }
+//     else {
+//       res.status(400).send({ message: 'HTTP is not supported, please use HTTPS' });
+//     }
+//   })
+
+//   fastifyHttp.listen(80, "0.0.0.0", (err, address) => {
+//     if (err) {
+//       logger.error(err.message);
+//       return;
+//     }
+//     logger.log("HTTP Server listening on address", address);
+//   })
+
+// }

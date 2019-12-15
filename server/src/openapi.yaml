@@ -35,11 +35,15 @@ paths:
                   type: string
       responses:
         '200':
-          description: Success
+          $ref: '#/components/responses/Success'
         '400':
-          description: Error
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
         '500':
-          description: Internal Error
+          $ref: '#/components/responses/InternalError'
   /auth/signup/:
     post:
       summary: Create a new account for the user
@@ -66,11 +70,15 @@ paths:
                   type: string
       responses:
         '200':
-          description: Success
+          $ref: '#/components/responses/Success'
         '400':
-          description: Error
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
         '500':
-          description: Internal Error
+          $ref: '#/components/responses/InternalError'
   /auth/signout/:
     delete:
       summary: Disconnect a logged user
@@ -79,12 +87,16 @@ paths:
         - auth
       responses:
         '200':
-          description: Success
+          $ref: '#/components/responses/Success'
         '400':
-          description: Error
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
         '500':
-          description: Internal Error
-  /user/current-session:
+          $ref: '#/components/responses/InternalError'
+  /api/user/current-session:
     get:
       summary: Get the logged user informations
       operationId: currentSession
@@ -92,21 +104,101 @@ paths:
         - user
       responses:
         '200':
-          description: Success
+          $ref: '#/components/responses/Success'
         '400':
-          description: Error
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
         '500':
-          description: Internal Error
-  /products/:
+          $ref: '#/components/responses/InternalError'
+  /api/products/:
     get:
       summary: Get the products
       operationId: getProducts
       tags:
-        - user
+        - product
       responses:
         '200':
-          description: Success
+          $ref: '#/components/responses/Success'
         '400':
-          description: Error
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
         '500':
-          description: Internal Error
+          $ref: '#/components/responses/InternalError'
+    post:
+      summary: Add a products
+      operationId: addProducts
+      tags:
+        - product
+      requestBody:
+        description: Account informations
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                image:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+components:
+  responses:
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'  
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'  
+    InternalError:
+      description: Internal error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'  
+    Success:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'  
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+        - code
+        - message

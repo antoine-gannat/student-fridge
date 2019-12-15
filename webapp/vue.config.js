@@ -14,6 +14,11 @@ module.exports = {
                 ws: true,
                 changeOrigin: true
             },
+            '/auth': {
+                target: 'http://localhost:4000',
+                ws: true,
+                changeOrigin: true
+            },
             '/data': {
                 target: 'http://localhost:4000',
                 ws: true,

@@ -4,11 +4,11 @@ import httpCodes from '../../declarations/httpCodes';
 import * as fileManager from '../../fileManager';
 
 export function addProduct(req, res) {
-    if (!req.body || !req.body.name || !req.raw || !req.raw.files || req.raw.files.length === 0) {
+    if (!req.body || !req.body.name || !req.files || req.files.length === 0) {
         res.status(httpCodes.BAD_REQUEST.code).send(httpCodes.BAD_REQUEST.message);
         return;
     }
-    const image = req.raw.files[0];
+    const image = req.files[0];
     console.log(req.body, image)
     fileManager.uploadFile(image).then((path) => {
         logger.info("File uploaded to " + path);
