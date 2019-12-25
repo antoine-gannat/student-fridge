@@ -19,34 +19,32 @@ const port = Number(process.env.PORT) || 4000;
 
 const app = express();
 
-
-// Set static routes
-// Serve a static route to serve the client
-logger.info("Serving frontend from folder: ", path.join(__dirname, '../../webapp/dist'));
-app.use('/', express.static(path.join(__dirname, '../../webapp/dist')));
-// serve the uploaded files
-logger.info('Serving static-files from :', path.join(__dirname, '../static-files'));
-app.use('/static-files', express.static(path.join(__dirname, '../static-files')));
-
-// set middlewares to decode requests
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.text());
-app.use(bodyParser.json());
-
-// Handle file upload
-// app.use(fileUpload());
-
-// Set the request logger
-app.use(requestsLogger);
-
-// Set the auth middleware
-app.use('/api', authMiddleware);
-
 new OpenApiValidator({
   apiSpec: path.join(__dirname, 'openapi.yaml')
 })
   .install(app)
   .then(() => {
+    // Set static routes
+    // Serve a static route to serve the client
+    logger.info("Serving frontend from folder: ", path.join(__dirname, '../../webapp/dist'));
+    app.use('/', express.static(path.join(__dirname, '../../webapp/dist')));
+    // serve the uploaded files
+    logger.info('Serving static-files from :', path.join(__dirname, '../static-files'));
+    app.use('/static-files', express.static(path.join(__dirname, '../static-files')));
+
+    // set middlewares to decode requests
+    app.use(bodyParser.urlencoded({ extended: false }));
+    app.use(bodyParser.text());
+    app.use(bodyParser.json());
+
+    // Handle file upload
+    // app.use(fileUpload());
+
+    // Set the request logger
+    app.use(requestsLogger);
+
+    // Set the auth middleware
+    app.use('/api', authMiddleware);
     // Route declaration //
     // auth
     app.post('/auth/signup/', service.auth.signUp);
@@ -59,26 +57,24 @@ new OpenApiValidator({
 
     // user
     app.get('/api/user/current-session', service.user.currentSession);
-  });
 
-// start the server
-if (process.env.NODE_DEBUG) {
-  http.createServer(app).listen(port, "0.0.0.0", () => {
-    logger.log(`Dev server listening on port ${port}`);
+    // start the server
+    if (process.env.NODE_DEBUG) {
+      http.createServer(app).listen(port, "0.0.0.0", () => {
+        logger.log(`Dev server listening on port ${port}`);
+      });
+    } else {
+      logger.log("loading ssl keys.")
+      // Certificate
+      const credentials: any = {
+        key: fs.readFileSync('/etc/letsencrypt/live/student-fridge.fr/privkey.pem', 'utf8'),
+        cert: fs.readFileSync('/etc/letsencrypt/live/student-fridge.fr/cert.pem', 'utf8')
+      }
+      https.createServer(credentials, app).listen(port, () => {
+        logger.log(`HTTPS server listening on port ${port}`);
+      });
+    }
   });
-} else {
-  logger.log("loading ssl keys.")
-  // Certificate
-  const credentials: any = {
-    key: fs.readFileSync('/etc/letsencrypt/live/student-fridge.fr/privkey.pem', 'utf8'),
-    cert: fs.readFileSync('/etc/letsencrypt/live/student-fridge.fr/cert.pem', 'utf8')
-  }
-  https.createServer(credentials, app).listen(port, () => {
-    logger.log(`HTTPS server listening on port ${port}`);
-  });
-}
-
-
 // if production mode
 if (!process.env.NODE_DEBUG) {
 
