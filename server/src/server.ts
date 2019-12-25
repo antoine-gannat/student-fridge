@@ -59,24 +59,26 @@ new OpenApiValidator({
 
     // user
     app.get('/api/user/current-session', service.user.currentSession);
-
-    // start the server
-    if (process.env.NODE_DEBUG) {
-      http.createServer(app).listen(port, "0.0.0.0", () => {
-        logger.log(`Dev server listening on port ${port}`);
-      });
-    } else {
-      logger.log("loading ssl keys.")
-      // Certificate
-      const credentials: any = {
-        key: fs.readFileSync('/etc/letsencrypt/live/student-fridge.fr/privkey.pem', 'utf8'),
-        cert: fs.readFileSync('/etc/letsencrypt/live/student-fridge.fr/cert.pem', 'utf8')
-      }
-      https.createServer(credentials, app).listen(port, () => {
-        logger.log(`HTTPS server listening on port ${port}`);
-      });
-    }
   });
+
+// start the server
+if (process.env.NODE_DEBUG) {
+  http.createServer(app).listen(port, "0.0.0.0", () => {
+    logger.log(`Dev server listening on port ${port}`);
+  });
+} else {
+  logger.log("loading ssl keys.")
+  // Certificate
+  const credentials: any = {
+    key: fs.readFileSync('/etc/letsencrypt/live/student-fridge.fr/privkey.pem', 'utf8'),
+    cert: fs.readFileSync('/etc/letsencrypt/live/student-fridge.fr/cert.pem', 'utf8')
+  }
+  https.createServer(credentials, app).listen(port, () => {
+    logger.log(`HTTPS server listening on port ${port}`);
+  });
+}
+
+
 // if production mode
 if (!process.env.NODE_DEBUG) {
 
