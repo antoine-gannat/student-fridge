@@ -19,29 +19,31 @@ const port = Number(process.env.PORT) || 4000;
 
 const app = express();
 
+// Set static routes
+// Serve a static route to serve the client
+logger.info("Serving frontend from folder: ", path.join(__dirname, '../../webapp/dist'));
+app.use('/', express.static(path.join(__dirname, '../../webapp/dist')));
+// serve the uploaded files
+logger.info('Serving static-files from :', path.join(__dirname, '../static-files'));
+app.use('/static-files', express.static(path.join(__dirname, '../static-files')));
+
+// set middlewares to decode requests
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.text());
+app.use(bodyParser.json());
+
+// Handle file upload
+// app.use(fileUpload());
+
+// Set the request logger
+app.use(requestsLogger);
+
+
 new OpenApiValidator({
   apiSpec: path.join(__dirname, 'openapi.yaml')
 })
   .install(app)
   .then(() => {
-    // Set static routes
-    // Serve a static route to serve the client
-    logger.info("Serving frontend from folder: ", path.join(__dirname, '../../webapp/dist'));
-    app.use('/', express.static(path.join(__dirname, '../../webapp/dist')));
-    // serve the uploaded files
-    logger.info('Serving static-files from :', path.join(__dirname, '../static-files'));
-    app.use('/static-files', express.static(path.join(__dirname, '../static-files')));
-
-    // set middlewares to decode requests
-    app.use(bodyParser.urlencoded({ extended: false }));
-    app.use(bodyParser.text());
-    app.use(bodyParser.json());
-
-    // Handle file upload
-    // app.use(fileUpload());
-
-    // Set the request logger
-    app.use(requestsLogger);
 
     // Set the auth middleware
     app.use('/api', authMiddleware);
