@@ -7,7 +7,14 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
     state: {
         user: null,
-        products: null
+        products: [
+            {id:0, name: 'poulet',expiration_date: "01/01/20", image: 'https://cdn.pratico-pratiques.com/app/uploads/sites/2/2019/04/23104327/poulet-barbecue-sur-canette-de-biere.jpg'},
+            {id:1, name: 'poulet', image: 'https://cdn.pratico-pratiques.com/app/uploads/sites/2/2019/04/23104327/poulet-barbecue-sur-canette-de-biere.jpg'},
+            {id:2, name: 'poulet', image: 'https://cdn.pratico-pratiques.com/app/uploads/sites/2/2019/04/23104327/poulet-barbecue-sur-canette-de-biere.jpg'},
+            {id:3, name: 'poulet', image: 'https://cdn.pratico-pratiques.com/app/uploads/sites/2/2019/04/23104327/poulet-barbecue-sur-canette-de-biere.jpg'},
+            {id:4, name: 'poulet', image: 'https://cdn.pratico-pratiques.com/app/uploads/sites/2/2019/04/23104327/poulet-barbecue-sur-canette-de-biere.jpg'},
+            {id:5, name: 'poulet', image: 'https://cdn.pratico-pratiques.com/app/uploads/sites/2/2019/04/23104327/poulet-barbecue-sur-canette-de-biere.jpg'}
+        ]
     },
     getters: {
         products (state) {

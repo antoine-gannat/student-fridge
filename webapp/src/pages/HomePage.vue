@@ -18,6 +18,7 @@
         >Rejoins nous !</router-link>
       </div>
     </section>
+    <!-- Show the content of the fridge -->
     <Products />
   </main>
 </template>
