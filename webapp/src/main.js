@@ -16,7 +16,7 @@ new Vue({
   render: h => h(App),
   created () {
     store.dispatch("loadCurrentSession")
-    // store.dispatch("loadProducts")
+    store.dispatch("loadProducts")
   },
   store,
   router
