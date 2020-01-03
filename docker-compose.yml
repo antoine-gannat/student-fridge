@@ -38,6 +38,7 @@ services:
       - /etc/letsencrypt/live/student-fridge.fr/privkey.pem:/etc/letsencrypt/live/student-fridge.fr/privkey.pem
       - /etc/letsencrypt/live/student-fridge.fr/cert.pem:/etc/letsencrypt/live/student-fridge.fr/cert.pem
       - /etc/letsencrypt/live/student-fridge.fr/chain.pem:/etc/letsencrypt/live/student-fridge.fr/chain.pem
+      - static-files-volume:/app/server/static-files
     environment:
      STUDENTFRIDGE_DB_HOST: mysql
      STUDENTFRIDGE_DB_PASSWORD: $STUDENTFRIDGE_DB_PASSWORD
@@ -53,3 +54,4 @@ services:
 
 volumes:
   mysql-volume:
+  static-files-volume:
