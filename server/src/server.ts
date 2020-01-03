@@ -61,8 +61,8 @@ new OpenApiValidator({
 
     // start the server
     if (process.env.NODE_DEBUG) {
-      http.createServer(app).listen(httpsPort, "0.0.0.0", () => {
-        logger.log(`Dev server listening on port ${httpsPort}`);
+      http.createServer(app).listen(4000, "0.0.0.0", () => {
+        logger.log(`Dev server listening on port 4000`);
       });
     } else {
       logger.log("loading ssl keys.")
