@@ -10,12 +10,11 @@ import logger from './loggers/logger';
 import service from './service';
 import database from './database';
 import authMiddleware from './controllers/auth/authMiddleware';
-import { ServerOptions } from 'https';
 // Initialize the database
 database.connect();
 
 // Set the port
-const port = Number(process.env.PORT) || 4000;
+const httpsPort = 443;
 
 const app = express();
 
@@ -38,45 +37,55 @@ app.use(bodyParser.json());
 // Set the request logger
 app.use(requestsLogger);
 
+logger.log("loading ssl keys.")
+// Certificate
+const credentials: any = {
+  key: fs.readFileSync('/etc/letsencrypt/live/student-fridge.fr/privkey.pem', 'utf8'),
+  cert: fs.readFileSync('/etc/letsencrypt/live/student-fridge.fr/cert.pem', 'utf8')
+}
+https.createServer(credentials, app).listen(httpsPort, () => {
+  logger.log(`HTTPS server listening on port ${httpsPort}`);
+});
 
-new OpenApiValidator({
-  apiSpec: path.join(__dirname, 'openapi.yaml')
-})
-  .install(app)
-  .then(() => {
 
-    // Set the auth middleware
-    app.use('/api', authMiddleware);
-    // Route declaration //
-    // auth
-    app.post('/auth/signup/', service.auth.signUp);
-    app.post('/auth/signin/', service.auth.signIn);
-    app.delete('/auth/signout/', service.auth.signOut);
+// new OpenApiValidator({
+//   apiSpec: path.join(__dirname, 'openapi.yaml')
+// })
+//   .install(app)
+//   .then(() => {
 
-    // products
-    app.get('/api/products/', service.product.getProducts);
-    app.post('/api/products/', service.product.addProduct);
+//     // Set the auth middleware
+//     app.use('/api', authMiddleware);
+//     // Route declaration //
+//     // auth
+//     app.post('/auth/signup/', service.auth.signUp);
+//     app.post('/auth/signin/', service.auth.signIn);
+//     app.delete('/auth/signout/', service.auth.signOut);
 
-    // user
-    app.get('/api/user/current-session', service.user.currentSession);
+//     // products
+//     app.get('/api/products/', service.product.getProducts);
+//     app.post('/api/products/', service.product.addProduct);
 
-    // start the server
-    if (process.env.NODE_DEBUG) {
-      http.createServer(app).listen(port, "0.0.0.0", () => {
-        logger.log(`Dev server listening on port ${port}`);
-      });
-    } else {
-      logger.log("loading ssl keys.")
-      // Certificate
-      const credentials: any = {
-        key: fs.readFileSync('/etc/letsencrypt/live/student-fridge.fr/privkey.pem', 'utf8'),
-        cert: fs.readFileSync('/etc/letsencrypt/live/student-fridge.fr/cert.pem', 'utf8')
-      }
-      https.createServer(credentials, app).listen(port, () => {
-        logger.log(`HTTPS server listening on port ${port}`);
-      });
-    }
-  });
+//     // user
+//     app.get('/api/user/current-session', service.user.currentSession);
+
+//     // start the server
+//     if (process.env.NODE_DEBUG) {
+//       http.createServer(app).listen(httpsPort, "0.0.0.0", () => {
+//         logger.log(`Dev server listening on port ${httpsPort}`);
+//       });
+//     } else {
+//       logger.log("loading ssl keys.")
+//       // Certificate
+//       const credentials: any = {
+//         key: fs.readFileSync('/etc/letsencrypt/live/student-fridge.fr/privkey.pem', 'utf8'),
+//         cert: fs.readFileSync('/etc/letsencrypt/live/student-fridge.fr/cert.pem', 'utf8')
+//       }
+//       https.createServer(credentials, app).listen(httpsPort, () => {
+//         logger.log(`HTTPS server listening on port ${httpsPort}`);
+//       });
+//     }
+//   });
 // if production mode
 if (!process.env.NODE_DEBUG) {
 
