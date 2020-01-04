@@ -18,6 +18,9 @@ module.exports = {
         msTileColor: '#000000',
         appleMobileWebAppCapable: 'yes',
         appleMobileWebAppStatusBarStyle: 'black',
+        workboxOptions: {
+            skipWaiting: true
+        },
         workboxPluginMode: 'GenerateSW'
     },
     devServer: {

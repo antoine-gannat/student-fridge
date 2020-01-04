@@ -21,7 +21,6 @@
             v-model="name"
             type="text"
             class="form-control"
-            id="name1"
             placeholder="Nom du produit"
             required
           >
@@ -32,7 +31,6 @@
             v-model="expirationDate"
             type="date"
             class="form-control"
-            id="name1"
             placeholder="Date de péremption"
           >
         </div>
