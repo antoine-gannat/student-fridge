@@ -1,4 +1,17 @@
+const fs = require('fs');
+const packageJson = JSON.parse(fs.readFileSync('./package.json'));
 module.exports = {
+    configureWebpack: config => {
+        config.output.filename = packageJson.version + '.[name].js';
+
+    },
+    chainWebpack: config => {
+        config.plugin('extract-css')
+            .tap(([options, ...args]) => [
+                Object.assign({}, options, { filename: 'css/' + packageJson.version + '.[name].css' }),
+                ...args
+            ])
+    },
     pwa: {
         name: 'StudentFridge',
         themeColor: '#000000',
