@@ -8,13 +8,14 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    steps:
+steps:
     - uses: actions/checkout@v1
     - name: Build the Docker image
-      run: docker build . -t antoinegannat/student-fridge:latest
+      run: docker build . -t docker.pkg.github.com/antoine-gannat/student-fridge/student-fridge:latest
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@master
       with:
-        name: antoinegannat/student-fridge
+        name: antoine-gannat/student-fridge
         username: ${{ secrets.docker_username }}
         password: ${{ secrets.docker_password }}
+        registry: docker.pkg.github.com
