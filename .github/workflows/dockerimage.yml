@@ -11,4 +11,6 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Build the Docker image
-      run: docker build . --tag student-fridge:latest
+      run: docker build . -t docker.pkg.github.com/antoine-gannat/student-fridge/student-fridge:latest
+    - name: Push the Docker image
+      run: docker push docker.pkg.github.com/antoine-gannat/student-fridge/student-fridge:latest
