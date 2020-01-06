@@ -15,7 +15,7 @@ jobs:
       - name: Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
-          name: antoine-gannat/student-fridge
+          name: antoine-gannat/student-fridge/student-fridge:latest
           username: ${{ secrets.docker_username }}
           password: ${{ secrets.docker_password }}
           registry: docker.pkg.github.com
