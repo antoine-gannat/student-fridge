@@ -17,5 +17,5 @@ jobs:
         with:
           name: antoine-gannat/student-fridge/student-fridge:latest
           username: ${{ secrets.docker_username }}
-          password: ${{ secrets.docker_password }}
+          password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
