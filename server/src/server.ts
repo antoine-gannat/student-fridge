@@ -3,19 +3,18 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as bodyParser from 'body-parser';
 import * as  http from 'http';
-import * as  https from 'http';
+import * as  https from 'https';
 import { OpenApiValidator } from 'express-openapi-validator';
 import requestsLogger from './loggers/requestsLogger';
 import logger from './loggers/logger';
 import service from './service';
 import database from './database';
 import authMiddleware from './controllers/auth/authMiddleware';
-import { ServerOptions } from 'https';
 // Initialize the database
 database.connect();
 
 // Set the port
-const port = Number(process.env.PORT) || 4000;
+const httpsPort = 443;
 
 const app = express();
 
@@ -62,8 +61,8 @@ new OpenApiValidator({
 
     // start the server
     if (process.env.NODE_DEBUG) {
-      http.createServer(app).listen(port, "0.0.0.0", () => {
-        logger.log(`Dev server listening on port ${port}`);
+      http.createServer(app).listen(4000, "0.0.0.0", () => {
+        logger.log(`Dev server listening on port 4000`);
       });
     } else {
       logger.log("loading ssl keys.")
@@ -72,8 +71,8 @@ new OpenApiValidator({
         key: fs.readFileSync('/etc/letsencrypt/live/student-fridge.fr/privkey.pem', 'utf8'),
         cert: fs.readFileSync('/etc/letsencrypt/live/student-fridge.fr/cert.pem', 'utf8')
       }
-      https.createServer(credentials, app).listen(port, () => {
-        logger.log(`HTTPS server listening on port ${port}`);
+      https.createServer(credentials, app).listen(httpsPort, () => {
+        logger.log(`HTTPS server listening on port ${httpsPort}`);
       });
     }
   });

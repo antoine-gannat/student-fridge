@@ -21,7 +21,6 @@
             v-model="name"
             type="text"
             class="form-control"
-            id="name1"
             placeholder="Nom du produit"
             required
           >
@@ -32,7 +31,6 @@
             v-model="expirationDate"
             type="date"
             class="form-control"
-            id="name1"
             placeholder="Date de péremption"
           >
         </div>
@@ -63,6 +61,19 @@
           <span>Ajouter une image</span>
         </div>
       </div>
+      <div
+        class="progress w-100"
+        v-if="uploadPercentage > 0"
+      >
+        <div
+          class="progress-bar"
+          role="progressbar progress-bar-striped progress-bar-animated"
+          :style="'width:' + uploadPercentage + '%;'"
+          :aria-valuenow="uploadPercentage"
+          aria-valuemin="0"
+          aria-valuemax="100"
+        >{{uploadPercentage}}%</div>
+      </div>
       <button
         type="submit"
         class="btn btn-primary col-4 offset-4"
@@ -82,7 +93,8 @@ export default {
       showForm: false,
       name: null,
       image: null,
-      expirationDate: null
+      expirationDate: null,
+      uploadPercentage: 0
     }
   },
   methods: {
@@ -112,10 +124,17 @@ export default {
       formData.append('image', this.image);
       formData.append('name', this.name);
       formData.append('expirationDate', this.expiration)
-      axios.post('/api/products/', formData).then(() => {
+      axios.post('/api/products/', formData, {
+        onUploadProgress: (progressEvent) => {
+          this.uploadPercentage = parseInt(Math.round((progressEvent.loaded / progressEvent.total) * 100));
+        }
+      }).then(() => {
         this.$snotify.success('Produit ajouter !', 'Succès !', { timeout: 2000 })
+        this.$store.dispatch("loadProducts")
       }).catch((err) => {
         this.$snotify.error(err.response.data.message, 'Erreur !', { timeout: 5000 })
+      }).finally(() => {
+        this.showForm = false;
       })
     }
   }
