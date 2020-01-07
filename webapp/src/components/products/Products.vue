@@ -36,6 +36,13 @@ export default {
 .products {
   background: rgb(253, 253, 253);
   height: 500px;
-  padding: 0 8% 0 8%;
+  padding: 0% 8% 0 8%;
+}
+.row{
+  padding-top: 5%;
+}
+.mr-2{
+  padding-top: 3%;
+  padding-bottom: 3%;
 }
 </style>

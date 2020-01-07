@@ -1,7 +1,7 @@
 <template>
   <div>
     <button
-      class="btn btn-outline-primary"
+      class="btn btn-outline-primary btn-ajout-prod"
       v-if="!showForm"
       @click.prevent="showForm = true"
     >Ajouter un produit</button>
@@ -153,5 +153,16 @@ export default {
   text-align: center;
   left: 35%;
   top: 45%;
+}
+
+.btn-ajout-prod{
+  background: #880D1E;
+  font-size: medium;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  color: #EEE0CB;
+  border: #880D1E;
+}
+.btn-ajout-prod:hover{
+  background: #E06E4E;
 }
 </style>
