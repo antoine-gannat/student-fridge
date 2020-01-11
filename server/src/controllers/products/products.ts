@@ -12,7 +12,8 @@ export function addProduct(req, res) {
     fileManager.uploadFile(image).then((path) => {
         logger.info("File uploaded to " + path);
         // insert the product in the database
-        database.query("INSERT INTO `products`(name, image, expiration_date) VALUE(?,?,?)", [req.body.name, path, req.body.expiratonDate])
+        database.query("INSERT INTO `products`(name, image, expiration_date, user_id) VALUE(?,?,?,?)",
+            [req.body.name, path, req.body.expiratonDate, req.user.id])
             .then(response => {
                 res.status(200).send({ message: 'Product added !' })
             }).catch((error) => {
