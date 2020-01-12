@@ -55,6 +55,7 @@ new OpenApiValidator({
     // products
     app.get('/api/products/', service.product.getProducts);
     app.post('/api/products/', service.product.addProduct);
+    app.delete('/api/products/', service.product.takeProduct);
 
     // user
     app.get('/api/user/current-session', service.user.currentSession);

@@ -5,7 +5,7 @@ import conf from './declarations/config';
 
 export function deleteFile(filePath) {
     return new Promise(function (resolve, reject) {
-        fs.unlink(conf.uploadFolder + filePath, (err) => {
+        fs.unlink(path.join(__dirname, '..', filePath), (err) => {
             if (err)
                 reject(err);
             else

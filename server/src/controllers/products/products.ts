@@ -40,3 +40,22 @@ export function getProducts(req, res) {
         res.status(httpCodes.INTERNAL_ERROR.code).send({ message: httpCodes.INTERNAL_ERROR.message });
     });
 }
+
+export function takeProduct(req, res) {
+    database.query('SELECT * FROM `products` WHERE `id` = ?', req.body.id).then((productInfo) => {
+        if (productInfo.length === 0) {
+            res.status(httpCodes.BAD_REQUEST.code).send({ message: httpCodes.BAD_REQUEST.message });
+            return
+        }
+        database.query('DELETE FROM `products` WHERE `id` = ?', req.body.id).then(() => {
+            fileManager.deleteFile(productInfo[0].image);
+            res.status(200).send({ message: 'Success' });
+        }).catch((error) => {
+            logger.error(error);
+            res.status(httpCodes.INTERNAL_ERROR.code).send({ message: httpCodes.INTERNAL_ERROR.message });
+        });
+    }).catch((error) => {
+        logger.error(error);
+        res.status(httpCodes.INTERNAL_ERROR.code).send({ message: httpCodes.INTERNAL_ERROR.message });
+    })
+}

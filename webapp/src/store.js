@@ -40,6 +40,15 @@ const store = new Vuex.Store({
                 commit("setProducts", null);
             })
         },
+        removeProduct ({ state }, productId) {
+            let products = state.products;
+            const index = products.findIndex((p) => p.id === productId)
+            if (index < 0) {
+                return
+            }
+            products.splice(index, 1)
+            Vue.set(state, 'products', products)
+        }
     }
 });
 

@@ -11,7 +11,7 @@
         <h5 class="card-title product-title">{{product.name}}</h5>
         <p class="card-text peremption">{{product.expiration_date}}</p>
         <button
-          href="#"
+          @click="takeProduct"
           class="btn btn-primary product-button"
         >Je veux ce produit</button>
       </div>
@@ -20,10 +20,25 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'Product',
   props: {
     product: Object
+  },
+  methods: {
+    takeProduct () {
+      if (!confirm("Ëtes-vous sûr ?")) {
+        return
+      }
+      axios.delete('/api/products/', { data: { id: this.product.id } }).then(() => {
+        this.$snotify.success(null, 'Produit retiré !', { timeout: 3000 })
+        this.$store.dispatch('removeProduct', this.product.id)
+      }).catch(() => {
+        this.$snotify.error('Une erreur s\'est produite, veuillez réessayer.', 'Erreur', { timeout: 5000 })
+      })
+    }
   }
 }
 </script>
