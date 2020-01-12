@@ -18,9 +18,10 @@ export default {
 </script>
 
 <style>
-@import "~vue-snotify/styles/material.css";
+@import "~vue-snotify/styles/material.css";*
 /* COLORS: https://coolors.co/37123c-71677c-a99f96-dda77b-945d5e */
 #app {
+  background:red;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

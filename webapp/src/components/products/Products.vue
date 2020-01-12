@@ -1,14 +1,17 @@
 <template>
   <section class="products">
-    <h2 class="mr-2">Au menu</h2>
+    <h2 class="mr-2 titre">Produits disponibles</h2>
     <AddProduct v-if="user" />
-    <div class="row">
+    <div class="row product-container" v-if="user">
       <Product
         class="col-sm-12 col-md-6 col-lg-4 mb-4"
         v-for="product in products"
         :key="product.id"
         :product="product"
       />
+    </div>
+    <div v-else class="connect">
+      Connectez-vous pour voir les produits disponibles
     </div>
   </section>
 </template>
@@ -34,15 +37,28 @@ export default {
 
 <style scoped>
 .products {
-  background: rgb(253, 253, 253);
+  background:#EEE0CB;
   height: 500px;
   padding: 0% 8% 0 8%;
 }
-.row{
+
+.product-container{
   padding-top: 5%;
 }
-.mr-2{
+
+.titre{
   padding-top: 3%;
   padding-bottom: 3%;
+  text-align:center;
+  color: #503D3F;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-decoration: double underline #E06E4E;
+  }
+
+.connect{
+  text-align: center;
+  color:#880D1E;
+  font-size:20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 </style>

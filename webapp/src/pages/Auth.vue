@@ -62,8 +62,14 @@ export default {
 </script>
 
 <style scoped>
+main{
+  background-color: #EEE0CB;
+  height:100%;
+  width:100%;
+  position:fixed;
+}
 .authentication-block {
-  background: rgb(74, 30, 80);
+  background: #880D1E;
   min-height: 400px;
   height: 50vh;
   padding: 0;
@@ -86,7 +92,7 @@ export default {
 }
 
 .authentication-nav .selected {
-  background: rgb(74, 30, 80);
+  background: #880D1E;
   color: white;
   opacity: 1;
 }

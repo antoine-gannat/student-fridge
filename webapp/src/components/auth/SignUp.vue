@@ -45,7 +45,7 @@
       <div class="form-group">
         <input
           type="submit"
-          class="btn btn-primary submit-btn"
+          class="btn btn-primary submit-btn btn-co"
           value="Créer un compte"
         />
       </div>
@@ -90,5 +90,15 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.btn-co{
+   background: #E06E4E;
+  font-size: medium;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  color: #EEE0CB;
+  border: #880D1E;
+}
+.btn-co:hover{
+  background: rgb(216, 90, 55);
+}
 </style>

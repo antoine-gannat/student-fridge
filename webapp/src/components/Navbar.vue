@@ -35,17 +35,6 @@
           >Se connecter
           </router-link>
         </li>
-        <!-- Create an account button -->
-        <li
-          class="nav-item"
-          v-if="!user"
-        >
-          <router-link
-            class="nav-link"
-            to="/auth/signup"
-          >Créer un compte
-          </router-link>
-        </li>
         <!-- Log out button -->
         <li
           class="nav-item nav-link"

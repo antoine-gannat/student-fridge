@@ -2,9 +2,9 @@
   <main>
     <!-- Landing picture -->
     <section class="landing-section">
-      <div class="description-container">
+      <div class="description-container text-center">
         <h2>Fini le gaspillage ! </h2>
-        <p class="description">Les yeux plus gros que le ventre ? Partage avec d'autre étudiants !</p>
+        <p class="description">Les yeux plus gros que le ventre ?<br/> Partage avec d'autres étudiants !</p>
         <p>La vie est dure ? Notre frigo est là ! </p>
         <button
           class="btn btn-primary"
@@ -13,9 +13,9 @@
         >Installe l'application !</button>
         <router-link
           to="/auth/signup"
-          class="btn btn-primary"
+          class="btn btn-primary btn-co"
           v-else-if="!user"
-        >Rejoins nous !</router-link>
+        >Connecte-toi !</router-link>
       </div>
     </section>
     <!-- Show the content of the fridge -->
@@ -96,4 +96,15 @@ export default {
   right: 20px;
   text-align: right;
 }
+
+.btn-co{
+   background: #880D1E;
+  font-size: medium;
+  color: #EEE0CB;
+  border: #880D1E;
+}
+.btn-co:hover{
+  background: #E06E4E;
+}
+
 </style>
