@@ -42,7 +42,8 @@
             ref="pictureSelection"
             type="file"
             hidden="true"
-            accept="image/*;capture=camera"
+            accept="image/*"
+            capture="capture"
             required
           >
         </div>
@@ -174,14 +175,14 @@ export default {
   top: 45%;
 }
 
-.btn-ajout-prod{
-  background: #880D1E;
+.btn-ajout-prod {
+  background: #880d1e;
   font-size: medium;
-  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-  color: #EEE0CB;
-  border: #880D1E;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  color: #eee0cb;
+  border: #880d1e;
 }
-.btn-ajout-prod:hover{
-  background: #E06E4E;
+.btn-ajout-prod:hover {
+  background: #e06e4e;
 }
 </style>
