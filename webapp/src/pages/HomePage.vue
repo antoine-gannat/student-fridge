@@ -4,10 +4,10 @@
     <section class="landing-section">
       <div class="description-container text-center">
         <h2>Fini le gaspillage ! </h2>
-        <p class="description">Les yeux plus gros que le ventre ?<br/> Partage avec d'autres étudiants !</p>
+        <p class="description">Les yeux plus gros que le ventre ?<br /> Partage avec d'autres étudiants !</p>
         <p>La vie est dure ? Notre frigo est là ! </p>
         <button
-          class="btn btn-primary"
+          class="btn btn-primary btn-co"
           v-if="deferredPrompt"
           @click="installPWA"
         >Installe l'application !</button>
@@ -97,14 +97,13 @@ export default {
   text-align: right;
 }
 
-.btn-co{
-   background: #880D1E;
+.btn-co {
+  background: #880d1e;
   font-size: medium;
-  color: #EEE0CB;
-  border: #880D1E;
+  color: #eee0cb;
+  border: #880d1e;
 }
-.btn-co:hover{
-  background: #E06E4E;
+.btn-co:hover {
+  background: #e06e4e;
 }
-
 </style>

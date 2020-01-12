@@ -21,7 +21,7 @@ const app = express();
 // Set static routes
 // Serve a static route to serve the client
 logger.info("Serving frontend from folder: ", path.join(__dirname, '../../webapp/dist'));
-app.use('/', express.static(path.join(__dirname, '../../webapp/dist')));
+app.use('/', express.static(path.join(__dirname, '../../webapp/dist'), { maxAge: 0 }));
 // serve the uploaded files
 logger.info('Serving static-files from :', path.join(__dirname, '../static-files'));
 app.use('/static-files', express.static(path.join(__dirname, '../static-files')));
