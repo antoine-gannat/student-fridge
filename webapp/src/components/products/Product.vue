@@ -9,7 +9,10 @@
       >
       <div class="card-body">
         <h5 class="card-title product-title">{{product.name}}</h5>
-        <p class="card-text peremption">{{product.expiration_date}}</p>
+        <p
+          v-if="product.expiration_date"
+          class="card-text peremption"
+        >{{getDateParsed(product.expiration_date)}}</p>
         <button
           @click="takeProduct"
           class="btn btn-primary product-button"
@@ -28,6 +31,10 @@ export default {
     product: Object
   },
   methods: {
+    getDateParsed (timestamp) {
+      let date = new Date(timestamp);
+      return (date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear());
+    },
     takeProduct () {
       if (!confirm("Ëtes-vous sûr ?")) {
         return

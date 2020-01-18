@@ -13,7 +13,7 @@ export function addProduct(req, res) {
         logger.info("File uploaded to " + path);
         // insert the product in the database
         database.query("INSERT INTO `products`(name, image, expiration_date, user_id) VALUE(?,?,?,?)",
-            [req.body.name, path, req.body.expiratonDate, req.user.id])
+            [req.body.name, path, req.body.expirationDate, req.user.id])
             .then(response => {
                 res.status(200).send({ message: 'Product added !' })
             }).catch((error) => {

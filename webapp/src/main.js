@@ -14,10 +14,6 @@ Vue.config.productionTip = false
 
 new Vue({
   render: h => h(App),
-  created () {
-    store.dispatch("loadCurrentSession")
-    store.dispatch("loadProducts")
-  },
   store,
   router
 }).$mount('#app')

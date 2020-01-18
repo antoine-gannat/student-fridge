@@ -38,6 +38,8 @@ export default {
     }
   },
   created () {
+    this.$store.dispatch("loadCurrentSession");
+    this.$store.dispatch("loadProducts");
     // catch the event prompting the user to install the PWA
     window.addEventListener('beforeinstallprompt', (e) => {
       // prevent from opening

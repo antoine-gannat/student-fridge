@@ -124,7 +124,7 @@ export default {
       let formData = new FormData();
       formData.append('image', this.image);
       formData.append('name', this.name);
-      formData.append('expirationDate', this.expiration)
+      formData.append('expirationDate', this.expirationDate)
       axios.post('/api/products/', formData, {
         onUploadProgress: (progressEvent) => {
           this.uploadPercentage = parseInt(Math.round((progressEvent.loaded / progressEvent.total) * 100));
