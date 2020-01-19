@@ -8,11 +8,6 @@
             class="btn shadow-none"
             :class="{'selected': selectedPage === 'signin'}"
           >Se connecter</button>
-          <button
-            @click.prevent="selectedPage = 'signup'"
-            class="btn shadow-none"
-            :class="{'selected': selectedPage === 'signup'}"
-          >Créer un compte</button>
         </nav>
         <SignIn
           class="authentication-elem"
@@ -62,14 +57,14 @@ export default {
 </script>
 
 <style scoped>
-main{
-  background-color: #EEE0CB;
-  height:100%;
-  width:100%;
-  position:fixed;
+main {
+  background-color: #eee0cb;
+  height: 100%;
+  width: 100%;
+  position: fixed;
 }
 .authentication-block {
-  background: #880D1E;
+  background: #880d1e;
   min-height: 400px;
   height: 50vh;
   padding: 0;
@@ -86,13 +81,13 @@ main{
 }
 
 .authentication-nav button {
-  width: 50%;
+  width: 100%;
   border-radius: 0;
   opacity: 0.5;
 }
 
 .authentication-nav .selected {
-  background: #880D1E;
+  background: #880d1e;
   color: white;
   opacity: 1;
 }
