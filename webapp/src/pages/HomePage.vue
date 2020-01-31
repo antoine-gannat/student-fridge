@@ -12,7 +12,7 @@
           @click="installPWA"
         >Installe l'application !</button>
         <router-link
-          to="/auth/signup"
+          to="/auth/signin"
           class="btn btn-primary btn-co"
           v-else-if="!user"
         >Connecte-toi !</router-link>
