@@ -121,6 +121,10 @@ export default {
         this.$snotify.error("Merci d'ajouter une image", "Erreur", { timeout: 3000 })
         return
       }
+      if (this.expirationDate && new Date(this.expirationDate).getTime() < new Date().getTime()) {
+        this.$snotify.error(null, "Date invalide.", { timeout: 5000 });
+        return;
+      }
       let formData = new FormData();
       formData.append('image', this.image);
       formData.append('name', this.name);
@@ -132,6 +136,9 @@ export default {
       }).then(() => {
         this.$snotify.success('Produit ajouter !', 'Succès !', { timeout: 2000 })
         this.$store.dispatch("loadProducts")
+        this.image = null
+        this.name = null
+        this.expirationDate = null
       }).catch((err) => {
         this.$snotify.error(err.response.data.message, 'Erreur !', { timeout: 5000 })
       }).finally(() => {

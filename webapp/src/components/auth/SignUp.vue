@@ -79,7 +79,6 @@ export default {
       }).then(response => {
         // set the user
         this.$store.commit('setUser', response.data.user);
-        this.$snotify.success(response.data.message, 'Success !');
         // redirect to the dashboard
         this.$router.push('/');
       }).catch(err => {
@@ -91,14 +90,14 @@ export default {
 </script>
 
 <style scoped>
-.btn-co{
-   background: #E06E4E;
+.btn-co {
+  background: #e06e4e;
   font-size: medium;
-  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-  color: #EEE0CB;
-  border: #880D1E;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  color: #eee0cb;
+  border: #880d1e;
 }
-.btn-co:hover{
+.btn-co:hover {
   background: rgb(216, 90, 55);
 }
 </style>

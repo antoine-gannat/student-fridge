@@ -12,6 +12,9 @@ export function addProduct(req, res) {
     fileManager.uploadFile(image).then((path) => {
         logger.info("File uploaded to " + path);
         // insert the product in the database
+        if (req.body.expirationDate === 'null') {
+            req.body.expirationDate = null;
+        }
         database.query("INSERT INTO `products`(name, image, expiration_date, user_id) VALUE(?,?,?,?)",
             [req.body.name, path, req.body.expirationDate, req.user.id])
             .then(response => {

@@ -50,7 +50,6 @@ export default {
       axios.post('/auth/signin/', { email: this.formEmail, password: this.formPassword })
         .then((response) => {
           this.$store.commit('setUser', response.data.user);
-          this.$snotify.success(response.data.message);
           this.$router.push(this.$route.query.redirect || '/');
         }).catch((err) => {
           this.$snotify.error(err.response.data.message, 'Error !');
@@ -64,14 +63,14 @@ export default {
 .forget-passwd-link {
   color: white !important;
 }
-.btn-co{
-   background: #E06E4E;
+.btn-co {
+  background: #e06e4e;
   font-size: medium;
-  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-  color: #EEE0CB;
-  border: #880D1E;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  color: #eee0cb;
+  border: #880d1e;
 }
-.btn-co:hover{
+.btn-co:hover {
   background: rgb(216, 90, 55);
 }
 </style>
