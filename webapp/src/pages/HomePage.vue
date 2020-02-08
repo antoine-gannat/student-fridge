@@ -5,15 +5,15 @@
       <div class="description-container text-center">
         <h2>Fini le gaspillage ! </h2>
         <p class="description">Les yeux plus gros que le ventre ?<br /> Partage avec d'autres étudiants !</p>
-        <p>La vie est dure ? Notre frigo est là ! </p>
+        
         <button
-          class="btn btn-primary btn-co"
+          class="btn btn-co"
           v-if="deferredPrompt"
           @click="installPWA"
         >Installe l'application !</button>
         <router-link
           to="/auth/signin"
-          class="btn btn-primary btn-co"
+          class="btn btn-co"
           v-else-if="!user"
         >Connecte-toi !</router-link>
       </div>
@@ -107,5 +107,10 @@ export default {
 }
 .btn-co:hover {
   background: #e06e4e;
+  border: #880d1e;
+}
+.btn-co:active {
+  background: #e06e4e;
+  border: #880d1e;
 }
 </style>

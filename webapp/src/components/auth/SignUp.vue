@@ -93,11 +93,14 @@ export default {
 .btn-co {
   background: #e06e4e;
   font-size: medium;
-  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   color: #eee0cb;
   border: #880d1e;
 }
 .btn-co:hover {
   background: rgb(216, 90, 55);
+}
+.btn-co:active {
+  background: #e06e4e;
+  border: #880d1e;
 }
 </style>

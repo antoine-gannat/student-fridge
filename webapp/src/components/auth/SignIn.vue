@@ -25,7 +25,7 @@
       <div class="form-group">
         <input
           type="submit"
-          class="btn btn-primary submit-btn btn-co"
+          class="btn submit-btn btn-co"
           value="Connexion"
         />
       </div>
@@ -72,5 +72,9 @@ export default {
 }
 .btn-co:hover {
   background: rgb(216, 90, 55);
+}
+.btn-co:active {
+  background: #e06e4e;
+  border: #880d1e;
 }
 </style>

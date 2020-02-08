@@ -1,7 +1,7 @@
 <template>
   <div>
     <button
-      class="btn btn-outline-primary btn-ajout-prod"
+      class="btn btn-ajout-prod"
       v-if="!showForm"
       @click.prevent="showForm = true"
     >Ajouter un produit</button>
@@ -191,5 +191,9 @@ export default {
 }
 .btn-ajout-prod:hover {
   background: #e06e4e;
+}
+.btn-ajout-prod:active {
+  background: #e06e4e;
+  border: #880d1e;
 }
 </style>
