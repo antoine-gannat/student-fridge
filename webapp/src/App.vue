@@ -11,28 +11,12 @@ import Navbar from "./components/Navbar";
 import {mapGetters} from 'vuex';
 
 export default {
-  name: "app",
+  name: "App",
   components: {
     Navbar
   },
   computed:{
     ...mapGetters(['swRegistration'])
-  },
-  mounted(){
-    if (Notification.permission == 'granted') {
-      navigator.serviceWorker.getRegistration().then(function(reg) {
-        var options = {
-          body: 'Merci d\'utiliser Student Fridge !',
-          icon: 'img/icons/android-chrome-512x512.png',
-          vibrate: [100, 50, 100],
-          data: {
-            dateOfArrival: Date.now(),
-            primaryKey: 1
-          }
-        };
-        reg.showNotification('Merci !', options);
-      });
-    }
   },
   watch:{
     swRegistration(registration){
