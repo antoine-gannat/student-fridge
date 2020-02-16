@@ -12,6 +12,11 @@ Vue.use(Snotify);
 
 Vue.config.productionTip = false
 
+// request notification permission
+Notification.requestPermission(function(status) {
+  console.log('Notification permission status:', status);
+});
+
 new Vue({
   render: h => h(App),
   store,
