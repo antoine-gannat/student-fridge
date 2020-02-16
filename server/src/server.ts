@@ -77,7 +77,8 @@ new OpenApiValidator({
       });
     }
   });
-// if production mode
+
+  // if production mode, redirect HTTP requests to HTTPS
 if (!process.env.NODE_DEBUG) {
 
   let httpApp = express();

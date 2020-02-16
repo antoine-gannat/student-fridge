@@ -9,6 +9,7 @@
     <!-- Menu toggler for small screens -->
     <button
       class="navbar-toggler"
+      id="navbar-toggle-btn"
       type="button"
       data-toggle="collapse"
       data-target="#navbarSupportedContent"
@@ -63,6 +64,17 @@ export default {
   computed: {
     ...mapState({
       user: state => state.user
+    })
+  },
+  mounted(){
+    // handle clicks outside of navbar to close it
+    window.addEventListener('click', (event) => {
+      // if the click is located outside of the navbar and the navbar is visible
+      if (event.target.className.indexOf('navbar-toggler-icon') < 0
+        && event.target.className.indexOf('navbar-toggle-btn') < 0
+        && document.getElementById('navbarSupportedContent').className.indexOf('show') >= 0){
+        document.getElementById('navbar-toggle-btn').click();
+      }
     })
   },
   methods: {

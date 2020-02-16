@@ -7,7 +7,8 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
     state: {
         user: null,
-        products: []
+        products: [],
+        swRegistration: null
     },
     getters: {
         products (state) {
@@ -15,6 +16,9 @@ const store = new Vuex.Store({
         },
         user (state) {
             return (state.user);
+        },
+        swRegistration (state){
+            return (state.swRegistration);
         }
     },
     mutations: {
@@ -23,6 +27,9 @@ const store = new Vuex.Store({
         },
         setProducts (state, products) {
             state.products = products;
+        },
+        setSwRegistration(state, registration){
+            state.swRegistration = registration;
         }
     },
     actions: {

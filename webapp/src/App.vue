@@ -8,18 +8,53 @@
 
 <script>
 import Navbar from "./components/Navbar";
+import {mapGetters} from 'vuex';
 
 export default {
   name: "app",
   components: {
     Navbar
+  },
+  computed:{
+    ...mapGetters(['swRegistration'])
+  },
+  watch:{
+    swRegistration(registration){
+      if (!registration){
+        return
+      }
+      this.$snotify.confirm('Nouvelle version disponible..', 'Mise à jour !', {
+        closeOnClick: false,
+        buttons: [
+          {text: 'Rafraichir', action: () => this.update(registration), bold: true},
+          {text: 'Plus tard', action: (toast) => {this.$snotify.remove(toast.id); }},
+        ]
+      });
+    }
+  },
+  methods:{
+    update(registration) {
+      const registrationWaiting = registration.waiting
+      if (registrationWaiting) {
+        // switch the service worker to 'active'
+        // forcing it to get new content uppon next refresh
+        registrationWaiting.postMessage({ type: 'SKIP_WAITING' });
+        // once the message has been processed, refresh the page
+        registrationWaiting.addEventListener('statechange', e => {
+          if (e.target.state === 'activated') {
+            // refresh
+            window.location.reload();
+          }
+        })
+      }
+    }
   }
 };
 </script>
 
 <style>
-@import "~vue-snotify/styles/material.css";*
-/* COLORS: https://coolors.co/37123c-71677c-a99f96-dda77b-945d5e */
+@import "~vue-snotify/styles/material.css";
+
 #app {
   background:red;
   font-family: "Avenir", Helvetica, Arial, sans-serif;

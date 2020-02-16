@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 
 import { register } from 'register-service-worker'
+import store from './store'
 
 if (process.env.NODE_ENV === 'production') {
   console.log('Registering:', `${process.env.BASE_URL}service-worker.js`)
@@ -20,7 +21,8 @@ if (process.env.NODE_ENV === 'production') {
     updatefound () {
       console.log('New content is downloading.')
     },
-    updated () {
+    updated (registration) {
+      store.commit('setSwRegistration', registration);
       console.log('New content is available; please refresh.')
     },
     offline () {
