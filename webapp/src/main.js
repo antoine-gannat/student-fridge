@@ -38,6 +38,13 @@ function notificationSubscribe() {
       const subscription = await reg.pushManager.subscribe({
         userVisibleOnly: true,
         applicationServerKey: urlBase64ToUint8Array(publicVapidKey),
+      }).catch((err) => {
+        reg.pushManager.getSubscription().then((sub) => {
+          if (sub){
+            console.log("unsubscribe")
+            sub.unsubscribe();
+          }
+        })
       });
 
       await axios.post('/api/notification/subscribe', subscription).catch((err) => {
