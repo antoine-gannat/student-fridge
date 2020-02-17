@@ -31,7 +31,7 @@ function urlBase64ToUint8Array(base64String) {
 }
 
 function notificationSubscribe() {
-  const publicVapidKey = 'BIRWU-EqbeIMc1KSnUE1pHp6S-Rc0sgjtudlyAiEzaoqcYeM__ja5vC4VGZNtG7IxaYvDQ23X_HQ8rYQMqLHHTY';
+  const publicVapidKey = 'BNc4mbJHx5rwRVEoJf3xa7PVnsV9XvYZ38doiGq5vqoDD85RuJlNv-zselzFT64YxIfoT6aOH4sHUCxkJ4CDmZg';
   if (Notification.permission == 'granted') {
     console.log("notificationSubscribe");
     navigator.serviceWorker.getRegistration().then(async (reg) => {

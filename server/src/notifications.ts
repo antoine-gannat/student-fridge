@@ -81,7 +81,9 @@ export function sendNotification(subscription: NotificationSubscription, notific
         logger.error("sendNotification: ERROR! Subscription invalid.");
         return;
     }
-    webPush.sendNotification(subscription.subscription, JSON.stringify(notification));
+    webPush.sendNotification(subscription.subscription, JSON.stringify(notification)).catch((err) => {
+        logger.error("Failed to send notification to user ", subscription.userId);
+    });
 }
 
 // send a notification to every subscription
