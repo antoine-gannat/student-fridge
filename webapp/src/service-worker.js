@@ -5,20 +5,31 @@ self.addEventListener('push', event => {
 
     self.registration.showNotification(data.title, {
         body: data.body,
-        icon: 'img/icons/android-chrome-512x512.png',
+        badge:'img/icons/android-icon-36x36.png',
+        icon: 'img/icons/android-icon-192x192.png',
         vibrate: [100, 50, 100]
     });
 });
 
 self.addEventListener('notificationclick', function(e) {
-    var notification = e.notification;
     var action = e.action;
   
     if (action === 'close') {
-      notification.close();
+        e.notification.close();
     } else {
-      clients.openWindow('https://www.student-fridge.fr');
-      notification.close();
+        const rootUrl = new URL('/', location).href;
+        e.notification.close();
+        // Enumerate windows, and call window.focus(), or open a new one.
+        e.waitUntil(
+          clients.matchAll().then(matchedClients => {
+            for (let client of matchedClients) {
+              if (client.url === rootUrl) {
+                return client.focus();
+              }
+            }
+            return clients.openWindow("/");
+          })
+        );
     }
   });
 
