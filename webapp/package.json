@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "rimraf dist && vue-cli-service build && workbox generateSW workbox-config.js",
+    "build": "rimraf dist && vue-cli-service build && npm run gensw",
     "serve-build": "npm run build && python3 -m http.server --directory ./dist",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "gensw": "workbox injectManifest workbox-config.js"
   },
   "dependencies": {
     "axios": "^0.19.0",

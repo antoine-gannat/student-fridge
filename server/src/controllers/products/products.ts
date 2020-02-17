@@ -1,6 +1,7 @@
 import database from '../../database';
 import logger from '../../loggers/logger';
 import httpCodes from '../../declarations/httpCodes';
+import {sendNotificationToAll} from '../../notifications';
 import * as fileManager from '../../fileManager';
 
 export function addProduct(req, res) {
@@ -18,6 +19,11 @@ export function addProduct(req, res) {
         database.query("INSERT INTO `products`(name, image, expiration_date, user_id) VALUE(?,?,?,?)",
             [req.body.name, path, req.body.expirationDate, req.user.id])
             .then(response => {
+                // send a notification to every user
+                sendNotificationToAll({
+                    title: "Nouveau produit!",
+                    body: "Un nouveau produit vient d'être ajouté !"
+                })
                 res.status(200).send({ message: 'Product added !' })
             }).catch((error) => {
                 logger.error(error)

@@ -10,8 +10,12 @@ import logger from './loggers/logger';
 import service from './service';
 import database from './database';
 import authMiddleware from './controllers/auth/authMiddleware';
+import { subscriptionManager, webPushInit } from './notifications';
+
 // Initialize the database
 database.connect();
+
+webPushInit("studentfridge@gmail.com");
 
 // Set the port
 const httpsPort = 443;
@@ -31,12 +35,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.text());
 app.use(bodyParser.json());
 
-// Handle file upload
-// app.use(fileUpload());
-
 // Set the request logger
 app.use(requestsLogger);
 
+// check for outdated subscriptions every 5 minutes
+setInterval(() => {
+  logger.info("Checking for outdated subscriptions..");
+  subscriptionManager.removeOutdatedSubscriptions();
+}, 5 * 60 * 1000) // 5 min * 60 sec * 1000 ms
 
 new OpenApiValidator({
   apiSpec: path.join(__dirname, 'openapi.yaml')
@@ -59,6 +65,16 @@ new OpenApiValidator({
 
     // user
     app.get('/api/user/current-session', service.user.currentSession);
+    app.post('/api/notification/subscribe', service.user.notificationSubscribe);
+
+    // Express error handler
+    app.use((err, req, res, next) => {
+      // 7. Customize errors
+      res.status(err.status || 500).json({
+        message: err.message,
+        errors: err.errors,
+      });
+    });
 
     // start the server
     if (process.env.NODE_DEBUG) {
@@ -78,7 +94,7 @@ new OpenApiValidator({
     }
   });
 
-  // if production mode, redirect HTTP requests to HTTPS
+// if production mode, redirect HTTP requests to HTTPS
 if (!process.env.NODE_DEBUG) {
 
   let httpApp = express();

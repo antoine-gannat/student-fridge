@@ -14,6 +14,7 @@ class Database {
       password: process.env.STUDENTFRIDGE_DB_PASSWORD,
       database: process.env.STUDENTFRIDGE_DB_NAME
     });
+    // check if the connection is successfull
     this.db.getConnection((err, connection) => {
       if (err) {
         throw new Error(err);
