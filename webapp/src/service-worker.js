@@ -5,7 +5,7 @@ self.addEventListener('push', event => {
 
     self.registration.showNotification(data.title, {
         body: data.body,
-        badge:'img/icons/android-icon-36x36.png',
+        badge:'img/icons/android-icon-96x96.png',
         icon: 'img/icons/android-icon-192x192.png',
         vibrate: [100, 50, 100]
     });
