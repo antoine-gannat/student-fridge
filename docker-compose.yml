@@ -32,8 +32,7 @@ services:
   
   # student-fridge server and webapp
   student-fridge:
-    #image: docker.pkg.github.com/antoine-gannat/student-fridge/student-fridge:latest
-    build: .
+    image: docker.pkg.github.com/antoine-gannat/student-fridge/student-fridge:latest
     container_name: student-fridge
     volumes:
       - /etc/letsencrypt/live/student-fridge.fr/privkey.pem:/etc/letsencrypt/live/student-fridge.fr/privkey.pem
