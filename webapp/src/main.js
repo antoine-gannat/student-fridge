@@ -35,6 +35,9 @@ function notificationSubscribe() {
   if (Notification.permission == 'granted') {
     console.log("notificationSubscribe");
     navigator.serviceWorker.getRegistration().then(async (reg) => {
+      if (!reg) {
+        return;
+      }
       const subscription = await reg.pushManager.subscribe({
         userVisibleOnly: true,
         applicationServerKey: urlBase64ToUint8Array(publicVapidKey),
@@ -66,10 +69,12 @@ new Vue({
     // request notification permission
     if (Notification.permission !== 'granted') {
       console.log("asking notification permission");
-      Notification.requestPermission(function (status) {
+      Notification.requestPermission().then((status) => {
         console.log('Notification permission status:', status);
         notificationSubscribe();
       });
+    } else {
+      notificationSubscribe();
     }
   },
   render: h => h(App)
