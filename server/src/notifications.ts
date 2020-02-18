@@ -86,9 +86,11 @@ export function sendNotification(subscription: NotificationSubscription, notific
     });
 }
 
-// send a notification to every subscription
-export function sendNotificationToAll(notification: Notification){
+// send a notification to every subscription except the one from the blacklist
+export function sendNotificationToAll(notification: Notification, blacklist: Array<number>){
     subscriptionManager.subscriptions.forEach((sub) => {
-        sendNotification(sub, notification);
+        if (!blacklist.includes(sub.userId)){
+            sendNotification(sub, notification);
+        }
     })
 }

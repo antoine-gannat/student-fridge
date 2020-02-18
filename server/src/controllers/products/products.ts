@@ -19,11 +19,11 @@ export function addProduct(req, res) {
         database.query("INSERT INTO `products`(name, image, expiration_date, user_id) VALUE(?,?,?,?)",
             [req.body.name, path, req.body.expirationDate, req.user.id])
             .then(response => {
-                // send a notification to every user
+                // send a notification to every user except this user
                 sendNotificationToAll({
                     title: "Nouveau produit!",
                     body: "Un nouveau produit vient d'être ajouté !"
-                })
+                }, [req.user.id])
                 res.status(200).send({ message: 'Product added !' })
             }).catch((error) => {
                 logger.error(error)
