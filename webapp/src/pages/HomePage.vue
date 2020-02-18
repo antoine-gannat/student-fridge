@@ -16,7 +16,7 @@
           Installe l'application !
         </button>
         <a
-          v-else-if="!deferredPrompt"
+          v-else-if="!deferredPrompt && !user"
           class="btn btn-warning btn-howto"
           href="/howtoinstall.pdf"
           target="_blank"
@@ -26,7 +26,7 @@
         </a>
         <br />
         <router-link
-          v-if="!user && !deferredPrompt"
+          v-if="!user"
           to="/auth/signin"
           class="btn btn-co"
         >
