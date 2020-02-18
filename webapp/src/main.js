@@ -40,7 +40,7 @@ function notificationSubscribe() {
         applicationServerKey: urlBase64ToUint8Array(publicVapidKey),
       }).catch((err) => {
         reg.pushManager.getSubscription().then((sub) => {
-          if (sub){
+          if (sub) {
             console.log("unsubscribe")
             sub.unsubscribe();
           }
@@ -52,20 +52,25 @@ function notificationSubscribe() {
       });
     });
   }
-  else{
+  else {
     console.error("Notification permission not granted")
   }
 }
-// request notification permission
-Notification.requestPermission(function (status) {
-  console.log('Notification permission status:', status);
-  notificationSubscribe();
-});
 
 // //
 
 new Vue({
-  render: h => h(App),
   store,
-  router
+  router,
+  mounted() {
+    // request notification permission
+    if (Notification.permission !== 'granted') {
+      console.log("asking notification permission");
+      Notification.requestPermission(function (status) {
+        console.log('Notification permission status:', status);
+        notificationSubscribe();
+      });
+    }
+  },
+  render: h => h(App)
 }).$mount('#app')

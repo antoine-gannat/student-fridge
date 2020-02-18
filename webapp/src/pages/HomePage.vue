@@ -4,18 +4,34 @@
     <section class="landing-section">
       <div class="description-container text-center">
         <h2>Fini le gaspillage ! </h2>
-        <p class="description">Les yeux plus gros que le ventre ?<br /> Partage avec d'autres étudiants !</p>
+        <p class="description">
+          Les yeux plus gros que le ventre ?<br /> Partage avec d'autres étudiants !
+        </p>
         
         <button
-          class="btn btn-co"
           v-if="deferredPrompt"
+          class="btn btn-co"
           @click="installPWA"
-        >Installe l'application !</button>
+        >
+          Installe l'application !
+        </button>
+        <a
+          v-else-if="!deferredPrompt"
+          class="btn btn-warning btn-howto"
+          href="/howtoinstall.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Comment télécharger ?
+        </a>
+        <br />
         <router-link
+          v-if="!user && !deferredPrompt"
           to="/auth/signin"
           class="btn btn-co"
-          v-else-if="!user"
-        >Connecte-toi !</router-link>
+        >
+          Connecte-toi !
+        </router-link>
       </div>
     </section>
     <!-- Show the content of the fridge -->
@@ -37,6 +53,11 @@ export default {
       deferredPrompt: null
     }
   },
+  computed: {
+    ...mapState({
+      user: state => state.user
+    })
+  },
   created () {
     this.$store.dispatch("loadCurrentSession");
     this.$store.dispatch("loadProducts");
@@ -47,11 +68,6 @@ export default {
       // Stash the event so it can be triggered later.
       this.deferredPrompt = e;
       // Update UI notify the user they can add to home screen
-    })
-  },
-  computed: {
-    ...mapState({
-      user: state => state.user
     })
   },
   methods: {
@@ -112,5 +128,9 @@ export default {
 .btn-co:active {
   background: #e06e4e;
   border: #880d1e;
+}
+
+.btn-howto{
+  margin-bottom:10px;
 }
 </style>

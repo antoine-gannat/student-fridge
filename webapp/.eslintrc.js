@@ -3,6 +3,7 @@ module.exports = {
       'plugin:vue/recommended'
     ],
     rules: {
-      "no-console": "off"
+      "no-console": "off",
+      "html-self-closing": "off"
     }
 }

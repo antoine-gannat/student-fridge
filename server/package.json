@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "serve": "nodemon",
-    "build": "rimraf ./dist && tsc"
+    "build": "rimraf ./dist && tsc",
+    "gen-vapid": "node_modules/.bin/web-push generate-vapid-keys"
   },
   "repository": {
     "type": "git",

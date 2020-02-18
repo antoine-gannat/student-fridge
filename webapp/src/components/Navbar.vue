@@ -4,12 +4,13 @@
     <router-link
       class="navbar-brand"
       to="/"
-    >STUDENTFRIDGE
+    >
+      STUDENTFRIDGE
     </router-link>
     <!-- Menu toggler for small screens -->
     <button
-      class="navbar-toggler"
       id="navbar-toggle-btn"
+      class="navbar-toggler"
       type="button"
       data-toggle="collapse"
       data-target="#navbarSupportedContent"
@@ -17,33 +18,36 @@
       aria-expanded="false"
       aria-label="Toggle navigation"
     >
-      <span class="navbar-toggler-icon"></span>
+      <span class="navbar-toggler-icon" />
     </button>
     <!-- Navbar content -->
     <div
-      class="collapse navbar-collapse"
       id="navbarSupportedContent"
+      class="collapse navbar-collapse"
     >
       <ul class="navbar-nav">
         <!-- Log in button -->
         <li
-          class="nav-item"
           v-if="!user"
+          class="nav-item"
         >
           <router-link
             class="nav-link"
             to="/auth/signin"
-          >Se connecter
+          >
+            Se connecter
           </router-link>
         </li>
         <!-- Log out button -->
         <li
+          v-if="user"
           class="nav-item nav-link"
-          v-if="user"
-        >Bonjour {{user.username}}</li>
+        >
+          Bonjour {{ user.username }}
+        </li>
         <li
-          class="nav-item"
           v-if="user"
+          class="nav-item"
         >
           <span
             class="nav-link disconnect-btn"
