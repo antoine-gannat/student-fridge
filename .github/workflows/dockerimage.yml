@@ -13,7 +13,7 @@ jobs:
       - name: Build the Docker image
         run: docker build . -t docker.pkg.github.com/antoine-gannat/student-fridge/student-fridge:latest
       - name: Publish to Registry
-        uses: elgohr/Publish-Docker-Github-Action@master
+        uses: elgohr/Publish-Docker-Github-Action@v5
         with:
           name: antoine-gannat/student-fridge/student-fridge:latest
           username: ${{ secrets.docker_username }}
